@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "321Project_v3",
+    "slug": "321Project_v3",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "321Project_v3"
+}
