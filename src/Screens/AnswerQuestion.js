@@ -8,6 +8,7 @@ import {
   Modal,
   Image,
 } from "react-native";
+import { COLOR_GREEN } from "../Color";
 
 function AnswerQuestion({ navigation }) {
   //오늘의 질문, 답변 입력
@@ -19,47 +20,49 @@ function AnswerQuestion({ navigation }) {
   return (
     //오늘의 질문
     <View style={{ padding: 30 }}>
-      <Modal animationType="slide" transparent={true} visible={modalVisible} style={{backgroundColor: "green"}}>
-        <View
-          style={[
-            styles.centeredView,
-            {
-                
-              backgroundColor: "green",
-              alignSelf: "center",
-            },
-          ]}
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          style={{ backgroundColor: COLOR_GREEN }}
         >
-          <Text>"오늘의 문답"을 작성하지 않으셨네요!</Text>
-          <Image
-            source={require("../오리사진.png")}
-            style={{ height: 200, width: 200 }}
-          ></Image>
-          <View style={{flexDirection: "row"}}>
-            <Pressable
+          <View style={[styles.centeredView, { flex: 1 }]}>
+            <View
               style={{
+                backgroundColor: COLOR_GREEN,
+                paddingHorizontal: 30,
+                paddingVertical: 50,
+                borderRadius: 30,
+                justifyContent: "center",
                 alignItems: "center",
               }}
-              onPress={() => setModalVisible(false)}
             >
-              <Text>작성하러 가기</Text>
-            </Pressable>
-            <Pressable
-              style={{
-                width: 110,
-                height: 30,
-                alignItems: "center",
-              }}
-              onPress={() => {
-                navigation.navigate("QuestionList");
-                setModalVisible(false);
-              }}
-            >
-              <Text>나중에 할게요</Text>
-            </Pressable>
+              <Text>"오늘의 문답"을 작성하지 않으셨네요!</Text>
+              <Image
+                source={require("../오리사진.png")}
+                style={{ height: 200, width: 200 }}
+              ></Image>
+              <View style={{ flexDirection: "row" }}>
+                <Pressable
+                  style={styles.modalBtn}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text>작성하러 가기</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.modalBtn}
+                  onPress={() => {
+                    navigation.navigate("QuestionList");
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text>나중에 할게요</Text>
+                </Pressable>
+              </View>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
       <Text style={{ color: "grey" }}>#오늘의 질문</Text>
       <View
         style={{
@@ -121,6 +124,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  modalBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginHorizontal: 11,
+
+    // borderRightWidth: 10,
+    // borderLeftWidth: 10,
+    // borderTopWidth: 5,
+    // borderEndWidth: 5,
+    // borderColor: "white",
   },
 });
 
