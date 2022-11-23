@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
 function Home({ navigation }) {
+	const [answer, setAnswer] = useState(false);
   return (
     <View style={{flexDirection: "row"}}>
-      <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("Question")}>
+      <Pressable style= {{paddingHorizontal: 20}} onPress={() => answer===false ? navigation.navigate("AnswerQuestion") : navigation.navigate("QuestionList")}>
         <Text>문답</Text>
       </Pressable>
       <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("Question")}>

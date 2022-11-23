@@ -5,6 +5,7 @@ import Home from './src/Screens/Home';
 import Question from './src/Screens/Question';
 import AnswerQuestion from './src/Screens/AnswerQuestion';
 import QuestionList from './src/Screens/QuestionList';
+import QuestionModal from './src/Screens/Modal';
 
 
 const Stack = createNativeStackNavigator();
