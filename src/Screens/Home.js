@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
 function Home({ navigation }) {
-	const [answer, setAnswer] = useState(false);
+  //오늘 답변 작성 여부 (여기서 따질 필요는 없어보임)
+	const [answer, setAnswer] = useState(true);
   return (
     <View style={{flexDirection: "row"}}>
-      <Pressable style= {{paddingHorizontal: 20}} onPress={() => answer===false ? navigation.navigate("AnswerQuestion") : navigation.navigate("QuestionList")}>
+      <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("QuestionList", {IsAnswer : {answer}})}>
         <Text>문답</Text>
       </Pressable>
       <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("Question")}>

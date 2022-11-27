@@ -16,53 +16,12 @@ function AnswerQuestion({ navigation }) {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
-  const [modalVisible, setModalVisible] = useState(true);
+  
   return (
     //오늘의 질문
     <View style={{ padding: 30 }}>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          style={{ backgroundColor: COLOR_GREEN }}
-        >
-          <View style={[styles.centeredView, { flex: 1 }]}>
-            <View
-              style={{
-                backgroundColor: COLOR_GREEN,
-                paddingHorizontal: 30,
-                paddingVertical: 50,
-                borderRadius: 30,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>"오늘의 문답"을 작성하지 않으셨네요!</Text>
-              <Image
-                source={require("../오리사진.png")}
-                style={{ height: 200, width: 200 }}
-              ></Image>
-              <View style={{ flexDirection: "row" }}>
-                <Pressable
-                  style={styles.modalBtn}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text>작성하러 가기</Text>
-                </Pressable>
-                <Pressable
-                  style={styles.modalBtn}
-                  onPress={() => {
-                    navigation.navigate("QuestionList");
-                    setModalVisible(false);
-                  }}
-                >
-                  <Text>나중에 할게요</Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        </Modal>
+        
       <Text style={{ color: "grey" }}>#오늘의 질문</Text>
       <View
         style={{
@@ -90,7 +49,7 @@ function AnswerQuestion({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "red",
