@@ -8,7 +8,7 @@ import {
   Modal,
   Image,
 } from "react-native";
-import { COLOR_GREEN } from "../Color";
+import { COLOR_BG } from "../Color";
 
 function AnswerQuestion({ navigation }) {
   //오늘의 질문, 답변 입력
@@ -16,12 +16,10 @@ function AnswerQuestion({ navigation }) {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
-  
+
   return (
     //오늘의 질문
-    <View style={{ padding: 30 }}>
-
-        
+    <View style={{ padding: 30, backgroundColor: COLOR_BG, flex: 1 }}>
       <Text style={{ color: "grey" }}>#오늘의 질문</Text>
       <View
         style={{
@@ -35,8 +33,9 @@ function AnswerQuestion({ navigation }) {
         </Text>
         <Text>상담을 시작한 목적이 무엇인가요?</Text>
       </View>
-      <View>
-        <Text>나의 답변</Text>
+      {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
+      <View style={styles.answerView}>
+        <Text>(나)의 답변</Text>
         <TextInput
           multiline
           placeholder="답변을 입력해주세요"
@@ -98,6 +97,17 @@ export const styles = StyleSheet.create({
     // borderTopWidth: 5,
     // borderEndWidth: 5,
     // borderColor: "white",
+  },
+  answerView: {
+    paddingVertical: 15,
+    marginVertical: 7.5,
+  },
+  absolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 });
 

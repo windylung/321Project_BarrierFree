@@ -15,6 +15,9 @@ function Home({ navigation }) {
       <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("Question")}>
         <Text>정보제공</Text>
       </Pressable>
+      <Pressable style= {{paddingHorizontal: 20}} onPress={() => navigation.navigate("AnswerList")}>
+        <Text>정보제공</Text>
+      </Pressable>
     </View>
   );
 }

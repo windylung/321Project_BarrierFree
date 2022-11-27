@@ -1,3 +1,4 @@
+import { BlurView } from "@react-native-community/blur";
 import React, { useEffect, useReducer, useState } from "react";
 import {
   View,
@@ -23,7 +24,7 @@ import { styles } from "./AnswerQuestion";
 //render되는 화면
 const renderItem = ({ item }) => {
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ alignItems: "center", backgroundColor: COLOR_BG }}>
       <View style={{ flexDirection: "row", width: 360, height: 45 }}>
         {/* <Text>{item.id}</Text> */}
         <TouchableOpacity
@@ -236,6 +237,7 @@ function QuestionList({ navigation, route }) {
           keyExtractor={(item) => String(item.id)}
         ></FlatList>
       </View>
+      {modalVisible ? <BlurView style={styles.absolute} blurType="dark" blurAmount={4} /> : null}
     </SafeAreaView>
   );
 }

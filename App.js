@@ -6,6 +6,7 @@ import Question from './src/Screens/Question';
 import AnswerQuestion from './src/Screens/AnswerQuestion';
 import QuestionList from './src/Screens/QuestionList';
 import QuestionModal from './src/Screens/Modal';
+import AnswerList from './src/Screens/AnswerList';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,8 @@ export default function App() {
         <Stack.Screen name="Question" component={Question} />
         <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} />
         <Stack.Screen name="QuestionList" component={QuestionList} />
+        <Stack.Screen name="AnswerList" component={AnswerList} />
+        
       </Stack.Navigator>
     }</NavigationContainer>
   );
