@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import { styles } from "./AnswerQuestion";
-// import { useNavigation } from '@react-navigation/native';
 
 // const navigation = useNavigation();
 // const goScreen = ({navigation : {navigate}, route}) => {
@@ -21,45 +20,6 @@ import { styles } from "./AnswerQuestion";
 //   navigate("AnswerQuestionTwo")
 // }
 
-//render되는 화면
-const renderItem = ({ item }) => {
-  return (
-    <View style={{ alignItems: "center", backgroundColor: COLOR_BG }}>
-      <View style={{ flexDirection: "row", width: 360, height: 45 }}>
-        {/* <Text>{item.id}</Text> */}
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            width: 62,
-            height: 30,
-            alignItems: "center",
-            justifyContent: "center",
-            paddingLeft: 15,
-          }}
-        >
-          <Text style={{ fontSize: 17 }}>{item.month}</Text>
-          <Text style={{ fontSize: 17 }}> / </Text>
-          <Text style={{ fontSize: 17 }}>{item.date}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={
-          //   () => goScreen({QuestionId : item})
-          // }
-          style={{
-            justifyContent: "center",
-            width: 298,
-            height: 30,
-            paddingLeft: 20,
-            paddingRight: 15,
-            paddingVertical: 6,
-          }}
-        >
-          <Text style={{ fontSize: 14 }}>{item.value}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
 
 function QuestionList({ navigation, route }) {
   const [data, setData] = useState([]);
@@ -172,6 +132,49 @@ function QuestionList({ navigation, route }) {
   useEffect(() => {
     getData();
   }, []);
+  
+  
+  
+  //render되는 화면
+  const renderItem = ({item}) => {
+    return (
+      <View style={{ alignItems: "center", backgroundColor: COLOR_BG }}>
+        <View style={{ flexDirection: "row", width: 360, height: 45 }}>
+          {/* <Text>{item.id}</Text> */}
+          
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              width: 62,
+              height: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              paddingLeft: 15,
+            }}
+            onPress={() => navigation.navigate("AnswerQuestion")}
+          >
+            <Text style={{ fontSize: 17 }}>{item.month}</Text>
+            <Text style={{ fontSize: 17 }}> / </Text>
+            <Text style={{ fontSize: 17 }}>{item.date}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              justifyContent: "center",
+              width: 298,
+              height: 30,
+              paddingLeft: 20,
+              paddingRight: 15,
+              paddingVertical: 6,
+            }}
+            onPress={() => navigation.navigate("AnswerQuestion")}
+          >
+            <Text style={{ fontSize: 14 }}>{item.value}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
+  
   return (
     <SafeAreaView style={{ padding: 30, backgroundColor: COLOR_BG }}>
       <Modal
@@ -230,6 +233,7 @@ function QuestionList({ navigation, route }) {
       >
         <Text style={{ fontSize: 24 }}>답변 목록</Text>
       </View>
+      
       <View>
         <FlatList
           data={data}
