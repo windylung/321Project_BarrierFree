@@ -26,7 +26,7 @@ function QuestionList({ navigation, route }) {
   const [modalVisible, setModalVisible] = useState(
     route.params.IsAnswer.answer
   );
-
+  
   //질문 목록을 불러오는 함수 => 이후 DB에서 가져오도록 수정 필요
   const getData = () => {
     setData([
@@ -140,7 +140,6 @@ function QuestionList({ navigation, route }) {
     return (
       <View style={{ alignItems: "center", backgroundColor: COLOR_BG }}>
         <View style={{ flexDirection: "row", width: 360, height: 45 }}>
-          {/* <Text>{item.id}</Text> */}
           
           <TouchableOpacity
             style={{
@@ -151,7 +150,7 @@ function QuestionList({ navigation, route }) {
               justifyContent: "center",
               paddingLeft: 15,
             }}
-            onPress={() => navigation.navigate("AnswerQuestion")}
+            onPress={() => navigation.navigate("AnswerList")}
           >
             <Text style={{ fontSize: 17 }}>{item.month}</Text>
             <Text style={{ fontSize: 17 }}> / </Text>
@@ -166,7 +165,7 @@ function QuestionList({ navigation, route }) {
               paddingRight: 15,
               paddingVertical: 6,
             }}
-            onPress={() => navigation.navigate("AnswerQuestion")}
+            onPress={() => navigation.navigate("AnswerList")}
           >
             <Text style={{ fontSize: 14 }}>{item.value}</Text>
           </TouchableOpacity>
@@ -239,6 +238,7 @@ function QuestionList({ navigation, route }) {
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => String(item.id)}
+          // onEndReachedThreshold = {10}
         ></FlatList>
       </View>
       {modalVisible ? <BlurView style={styles.absolute} blurType="dark" blurAmount={4} /> : null}

@@ -7,16 +7,22 @@ import {
   StyleSheet,
   Modal,
   Image,
+  TouchableOpacity,
+  InputAccessoryView,
+  Button,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { COLOR_BG } from "../Color";
 
-function AnswerQuestion({ navigation }) {
+const AnswerQuestion = ({ navigation: { navigate } }) => {
   //오늘의 질문, 답변 입력
   const today = new Date();
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
-
+  const inputAccessoryViewID = "uniqueID";
   return (
     //오늘의 질문
     <View style={{ padding: 30, backgroundColor: COLOR_BG, flex: 1 }}>
@@ -42,19 +48,29 @@ function AnswerQuestion({ navigation }) {
           style={styles.input}
           value={text}
           onChangeText={(payload) => setText(payload)}
+          inputAccessoryViewID={inputAccessoryViewID}
+          // returnKeyType={'done'}
+          // onSubmitEditting={() => navigate("AnswerList")}
         ></TextInput>
+        <InputAccessoryView nativeID={inputAccessoryViewID}>
+          <View style={{flexDirection: "row-reverse"}}>
+            <Button
+              // onPress={() => navigate("AnswerList", { inputText: { text } })}
+              onPress={() => {Keyboard.dismiss(); navigate("AnswerList", { inputText: { text } })}}
+              title="Done"
+            />
+          </View>
+        </InputAccessoryView>
       </View>
     </View>
   );
-}
+};
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
   },
   input: {
-    backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
@@ -108,6 +124,10 @@ export const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+  answerViewText: {
+    marginVertical: 10,
+    marginHorizontal: 10,
   },
 });
 

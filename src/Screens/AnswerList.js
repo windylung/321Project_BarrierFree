@@ -1,5 +1,5 @@
 import { BlurView } from "@react-native-community/blur";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,9 @@ function AnswerList({ navigation: { navigate }, route }) {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
+  useEffect(() => {
+    route.params === undefined ? null : setText(route.params.inputText.text);
+  });
 
   return (
     //오늘의 질문
@@ -42,7 +45,11 @@ function AnswerList({ navigation: { navigate }, route }) {
           <Text>(나)의 답변</Text>
           <View>
             <TouchableOpacity onPress={() => navigate("AnswerQuestion")}>
-              <Text style={{ color: "grey" }}>답변을 작성해주세요</Text>
+              {text === "" ? (
+                <Text style={{ color: "grey" }}>답변을 작성해주세요</Text>
+              ) : (
+                <Text  style={styles.answerViewText}>{text}</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -52,22 +59,24 @@ function AnswerList({ navigation: { navigate }, route }) {
         <View style={styles.answerView}>
           <Text>(가족구성원1)의 답변</Text>
           <View>
-            <Text style={{ marginVertical: 10, marginHorizontal: 10 }}>
+            <Text style={styles.answerViewText}>
               답변이 작성되었습니다. 이 글은 영국에서부터 시작하여 어쩌구 저쩌구
               솰라
             </Text>
-            <BlurView
-              style={styles.absolute}
-              blurType="light"
-              blurAmount={3}
-              //   reducedTransparencyFallbackColor= {COLOR_BG}
-            />
+            {text === "" ? (
+              <BlurView
+                style={styles.absolute}
+                blurType="light"
+                blurAmount={3}
+                //   reducedTransparencyFallbackColor= {COLOR_BG}
+              />
+            ) : null}
           </View>
         </View>
         <View style={styles.answerView}>
           <Text>(가족구성원2)의 답변</Text>
           <View>
-            <Text style={{ marginVertical: 10, marginHorizontal: 10 }}>
+            <Text style={styles.answerViewText}>
               답변이 작성되었습니다. 이 글은 영국에서부터 시작하여 어쩌구 저쩌구
               솰라똑바로 봐 What's the situation 당황한 너의 시선 너머 끝내
               무너지는 성벽 차츰 밝아오는 새벽 Yeah uh 끝없이 이어지고 있어 무딘
@@ -75,7 +84,13 @@ function AnswerList({ navigation: { navigate }, route }) {
               숙제 높은 벽 앞에 스러지던 작고 약한 바람 소리가 뒤엉켜 폭풍처럼
               몰아치는 닿지 않을 듯한 외침
             </Text>
-            <BlurView style={styles.absolute} blurType="light" blurAmount={3} />
+            {text === "" ? (
+              <BlurView
+                style={styles.absolute}
+                blurType="light"
+                blurAmount={3}
+              />
+            ) : null}
           </View>
         </View>
       </View>
