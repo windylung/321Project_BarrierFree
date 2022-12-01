@@ -37,7 +37,7 @@ function AnswerList({ navigation: { navigate }, route }) {
         <Text style={{ fontWeight: "500", fontSize: 30 }}>
           {month} . {date}
         </Text>
-        <Text>상담을 시작한 목적이 무엇인가요?</Text>
+        <Text>나에게 부모님/자녀란 어떤 존재인가?</Text>
       </View>
       <View>
         {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
@@ -48,7 +48,7 @@ function AnswerList({ navigation: { navigate }, route }) {
               {text === "" ? (
                 <Text style={{ color: "grey" }}>답변을 작성해주세요</Text>
               ) : (
-                <Text  style={styles.answerViewText}>{text}</Text>
+                <Text style={styles.answerViewText}>{text}</Text>
               )}
             </TouchableOpacity>
           </View>
@@ -60,8 +60,11 @@ function AnswerList({ navigation: { navigate }, route }) {
           <Text>(가족구성원1)의 답변</Text>
           <View>
             <Text style={styles.answerViewText}>
-              답변이 작성되었습니다. 이 글은 영국에서부터 시작하여 어쩌구 저쩌구
-              솰라
+              너무 고맙고, 소중한 존재. 때로는 너무 모질게 훈육한 것이 아닌가
+              싶어도 아빠에겐 우리 딸 항상 걱정되고 잘 해주고 싶지. 아빠도
+              나이를 먹어서 표현하는 방식이 네가 마음에 들지 않을 때도 있겠지만,
+              항상 사랑하고 부족한 부분을 채워 주고자 하는 마음 기억해주길
+              바란다.
             </Text>
             {text === "" ? (
               <BlurView
@@ -77,12 +80,9 @@ function AnswerList({ navigation: { navigate }, route }) {
           <Text>(가족구성원2)의 답변</Text>
           <View>
             <Text style={styles.answerViewText}>
-              답변이 작성되었습니다. 이 글은 영국에서부터 시작하여 어쩌구 저쩌구
-              솰라똑바로 봐 What's the situation 당황한 너의 시선 너머 끝내
-              무너지는 성벽 차츰 밝아오는 새벽 Yeah uh 끝없이 이어지고 있어 무딘
-              칼날 끝에 잘라내지 못해 계속 반복되는 문제 Yeah 미처 풀지 못한
-              숙제 높은 벽 앞에 스러지던 작고 약한 바람 소리가 뒤엉켜 폭풍처럼
-              몰아치는 닿지 않을 듯한 외침
+              내 삶에서 가장 중요하고 소중하고 나의 애쓴 흔적이 보여지는 귀한
+              존재이자 고단하고 힘든 삶을 계속 살아가게 하는 원동력. 언제나
+              건강하고 행복하길 바랐으면 한다.
             </Text>
             {text === "" ? (
               <BlurView

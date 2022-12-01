@@ -32,7 +32,7 @@ function QuestionList({ navigation, route }) {
     setData([
       {
         id: 16,
-        value: "사랑도 사람도 너무나도 겁나 혼자인게 무서워",
+        value: "나에게 부모님/자녀란 어떤 존재인가?",
         month: 11,
         date: 22,
       },
