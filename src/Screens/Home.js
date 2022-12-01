@@ -25,7 +25,7 @@ function Home({ navigation }) {
         style={mainStyle.btn}
         onPress={() => navigation.navigate("Question")}
       >
-        <Text style={mainStyle.btnText}>정보제공</Text>
+        <Text style={mainStyle.btnText}>정보제공!</Text>
       </Pressable>
     </View>
   );
