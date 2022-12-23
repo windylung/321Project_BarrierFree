@@ -8,11 +8,15 @@ podfile_properties = JSON.parse(File.read(File.join(__dir__, 'Podfile.properties
 platform :ios, podfile_properties['ios.deploymentTarget'] || '13.0'
 install! 'cocoapods',
   :deterministic_uuids => false
+# pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec', :modular_headers => false
+# pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec', :modular_headers => false
+
 
 target '321Projectv3' do
   use_expo_modules!
+  use_modular_headers!
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec', :modular_headers => false
   config = use_native_modules!
-
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
 
   # Flags change depending on the env values.
