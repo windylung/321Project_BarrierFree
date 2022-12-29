@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "fv_321Project",
+    "slug": "fv_321Project",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "fv_321Project"
+}
