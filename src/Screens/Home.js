@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,19 @@ import {
   StyleSheet,
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
+import '@react-native-firebase/auth';
+import { firebase } from "@react-native-firebase/firestore";
+
 
 function Home({ navigation }) {
   //오늘 답변 작성 여부 (여기서 따질 필요는 없어보임)
   const [answer, setAnswer] = useState(true);
+  const getUser = async () => {
+    const dbuser = firebase.firestore().collection('User_Client').get();
+    (await dbuser).forEach((user) => console.log(user.data()));
+  }
+  useEffect(() => {
+    getUser();}, [])
   return (
     <View style={mainStyle.background}>
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -36,6 +45,12 @@ function Home({ navigation }) {
           <Text style={mainStyle.btnText}>정보제공</Text>
         </TouchableOpacity>
       </View>
+        <TouchableOpacity
+          style={[mainStyle.btn, mainStyle.touchable]}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={mainStyle.btnText}>로그인</Text>
+        </TouchableOpacity>
     </View>
   );
 }
