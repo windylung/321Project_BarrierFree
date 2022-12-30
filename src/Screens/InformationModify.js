@@ -12,31 +12,40 @@ import firestore from "@react-native-firebase/firestore";
 import { firebase } from "@react-native-firebase/auth";
 import { ButtonContainer, SafeArea } from "./StyleComponent";
 import { Alert } from "react-native";
+import { useEffect } from "react";
 
 //해당 페이지에 사용되는 모든 버튼 style component
 
-const InformationInput = ({navigation}) => {
+const InformationModify = ({navigation}) => {
+  
   const user = firebase.auth().currentUser;
-  const [name, setName] = useState("");
+  const [name, setName] = useState("jisoo");
   const [familyID, setFamilyID] = useState(0);
   const [role, setRole] = useState(-1);
   const [sex, setSex] = useState("");
-
-  const addUserCollection = firestore().collection("User_Client");
+  const UserClientCollection = firestore().collection("User_Client");
+  UserClientCollection.doc(user.uid).get().then(function(doc) {
+    if (doc.exists) {
+      // console.log(doc.data().userName)
+      setName(doc.data().userName)
+      setFamilyID(doc.data().familyID)
+      setRole(doc.data().role)
+      setSex(doc.data().sex)
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+    
+    
   const addUser = async () => {
     if (name === "" || role === -1 || sex === "") {
       return Alert.alert("정보를 선택해주세요");
     }
-
+    
     try {
-      // await addUserCollection.add({
-      //   id: user.uid,
-      //   userName: name,
-      //   familyID: familyID,
-      //   //invitatonID는 이후 함수 만들어서 수정예정
-      //   invitationID: user.uid,
-      //   role: role,
-      // });
       await addUserCollection.doc(user.uid).set({
         userName: name,
         familyID: familyID,
@@ -45,7 +54,7 @@ const InformationInput = ({navigation}) => {
         role: role,
         sex: sex
       });
-
+      
       setName("");
       setFamilyID(0);
       setRole(-1);
@@ -55,15 +64,16 @@ const InformationInput = ({navigation}) => {
       console.log(error.message);
     }
   };
-
+  
   return (
     <SafeArea>
       <View style={mainStyle.background}>
         <Text>회원정보</Text>
 
         <Text>이름</Text>
+        <Text>Name : {name}</Text>
         <TextInput
-          placeholder="Username"
+          placeholder= {name}
           returnKeyType="next"
           value={name}
           onChangeText={(name) => setName(name)}
@@ -111,4 +121,4 @@ const InformationInput = ({navigation}) => {
   );
 };
 
-export default InformationInput;
+export default InformationModify;

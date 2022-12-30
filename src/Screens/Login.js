@@ -1,13 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TextInput, Text, Alert, TouchableOpacity } from "react-native";
+import {
+  TextInput,
+  Text,
+  Alert,
+  TouchableOpacity,
+  View,
+  Modal,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import auth from "@react-native-firebase/auth";
-import firestore from '@react-native-firebase/firestore';
+import firestore from "@react-native-firebase/firestore";
 import { mainStyle } from "./Home";
+import { COLOR_GREEN } from "../Color";
 
 export const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [isFinding, setIsFinding] = useState(false);
+  const [findingEmail, setFindingEmail] = useState("");
   const [password, setPassword] = useState("");
   const passwordInput = useRef();
   const onSubmitEmailEditing = () => {
@@ -25,20 +35,32 @@ export const Login = ({ navigation }) => {
         email,
         password
       );
-      console.log("Im here");
-      console.log(userCredential);
-      {navigation.navigate("InformationInput")}
+    } catch (e) {
+      Alert.alert("아이디/비밀번호가 일치하지 않습니다");
+    }
+  };
+
+  const findingPassword = async (email) => {
+    console.log(email);
+    if (email === "") {
+      return Alert.alert("이메일을 입력해주세요");
+    }
+
+    try {
+      await auth().sendPasswordResetEmail(email);
     } catch (e) {
       console.log(e.code);
       switch (e.code) {
-        case "auth/weak-password":
-          Alert.alert("write a stronger password");
+        case "auth/user-not-found":
+          return Alert.alert("user-not-found");
+        case "auth/invalid-email":
+          return Alert.alert("invalid-email");
+        default:
+          return Alert.alert("error!");
       }
     }
   };
   // const addCollection = firestore().collection('users');
-
-  
   return (
     <SafeAreaView style={mainStyle.background}>
       <TextInput
@@ -61,9 +83,29 @@ export const Login = ({ navigation }) => {
         onSubmitEditing={onSubmitPasswordEditing}
       ></TextInput>
 
-      <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-        <Text>회원가입</Text>
-      </TouchableOpacity>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          style={{ marginHorizontal: 10 }}
+          onPress={() => navigation.navigate("SignUp")}
+        >
+          <Text>회원가입</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsFinding(true)}>
+          <Text>비밀번호찾기</Text>
+        </TouchableOpacity>
+      </View>
+      {isFinding === true ? (
+        <View>
+          <Text>비밀번호 재설정 메일을 받을 이메일 주소를 입력해주세요</Text>
+          <TextInput
+            placeholder="Email"
+            returnKeyType="send"
+            value={findingEmail}
+            onChangeText={(text) => setFindingEmail(text)}
+            onSubmitEditing={() => findingPassword(findingEmail)}
+          />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };

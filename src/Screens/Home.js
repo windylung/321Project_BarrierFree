@@ -10,6 +10,7 @@ import {
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import '@react-native-firebase/auth';
 import { firebase } from "@react-native-firebase/firestore";
+import InformationInput from "./InformationInput";
 
 
 function Home({ navigation }) {
@@ -58,6 +59,9 @@ function Home({ navigation }) {
 
         <TouchableOpacity onPress={logout}>
           <Text>로그아웃</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("InformationModify")}>
+          <Text>회원정보수정</Text>
         </TouchableOpacity>
     </View>
   );

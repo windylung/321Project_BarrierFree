@@ -11,6 +11,7 @@ import { Login } from "./src/Screens/Login";
 import InformationInput from "./src/Screens/InformationInput";
 import { SignUp } from "./src/Screens/SignUp";
 import auth from "@react-native-firebase/auth";
+import InformationModify from "./src/Screens/InformationModify";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -49,6 +50,7 @@ export default function App() {
           <Stack.Screen name="AnswerList" component={AnswerList} />
           <Stack.Screen name="MettingMain" component={MettingMain} />
           <Stack.Screen name="InformationInput" component={InformationInput} />
+          <Stack.Screen name="InformationModify" component={InformationModify} />
         </Stack.Navigator>
         
       }
