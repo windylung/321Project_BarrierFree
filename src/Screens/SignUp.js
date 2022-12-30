@@ -97,7 +97,9 @@ export const SignUp = ({ navigation }) => {
           onSubmitEditing={onSubmitCheckPasswordEditing}
         ></TextInput>
       </View>
-      
+      <TouchableOpacity onPress={onSubmitCheckPasswordEditing}>
+        <Text>확인</Text>
+      </TouchableOpacity>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity>
           <Image
