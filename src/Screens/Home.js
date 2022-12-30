@@ -6,6 +6,7 @@ import {
   S,
   TouchableOpacitytyleSheet,
   StyleSheet,
+  Image,
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import '@react-native-firebase/auth';
@@ -28,7 +29,36 @@ function Home({ navigation }) {
   }
   return (
     <View style={mainStyle.background}>
-      <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      
+        <TouchableOpacity
+          style={[mainStyle.btn, mainStyle.touchable]}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={mainStyle.btnText}>로그인</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={logout}>
+          <Text>로그아웃</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("InformationModify")}>
+          <Text>회원정보수정</Text>
+        </TouchableOpacity>
+
+
+
+
+        <View style = {{flex : 0.8,}}>
+          <Image
+              source={require("../MainCharacter.png")}
+              style={{ flex : 1.3 }}
+            ></Image>
+            <View style={mainStyle.background_img1}></View>
+        </View>
+
+
+
+
+        <View style={{ flexDirection: "row", justifyContent: "center", backgroundColor : "red", flex : 0.15}}>
         <TouchableOpacity
           style={[mainStyle.btn, mainStyle.touchable]}
           onPress={() =>
@@ -50,26 +80,13 @@ function Home({ navigation }) {
           <Text style={mainStyle.btnText}>정보제공</Text>
         </TouchableOpacity>
       </View>
-        <TouchableOpacity
-          style={[mainStyle.btn, mainStyle.touchable]}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={mainStyle.btnText}>로그인</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={logout}>
-          <Text>로그아웃</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("InformationModify")}>
-          <Text>회원정보수정</Text>
-        </TouchableOpacity>
     </View>
   );
 }
 
 export const mainStyle = StyleSheet.create({
   background: {
-    padding: 30,
+    padding: 0,
     backgroundColor: COLOR_BG,
     flex: 1,
   },
@@ -90,6 +107,13 @@ export const mainStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  background_img1 : {
+    backgroundColor: COLOR_GREEN,
+    borderTopLeftRadius : 200,
+    borderTopRightRadius : 200,
+    flex : 1
+  },
 });
+
 
 export default Home;
