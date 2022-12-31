@@ -29,7 +29,9 @@ function Home({ navigation }) {
   }
   return (
     <View style={mainStyle.background}>
-      
+
+        
+
         <TouchableOpacity
           style={[mainStyle.btn, mainStyle.touchable]}
           onPress={() => navigation.navigate("Login")}
@@ -40,6 +42,7 @@ function Home({ navigation }) {
         <TouchableOpacity onPress={logout}>
           <Text>로그아웃</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity onPress={() => navigation.navigate("InformationModify")}>
           <Text>회원정보수정</Text>
         </TouchableOpacity>
@@ -52,7 +55,7 @@ function Home({ navigation }) {
               source={require("../MainCharacter.png")}
               style={{ flex : 1.3 }}
             ></Image>
-            <View style={mainStyle.background_img1}></View>
+            
         </View>
 
 
@@ -104,8 +107,7 @@ export const mainStyle = StyleSheet.create({
     fontSize: 15,
   },
   touchable: {
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   background_img1 : {
     backgroundColor: COLOR_GREEN,
