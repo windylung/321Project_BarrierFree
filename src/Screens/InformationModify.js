@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -13,82 +13,98 @@ import { firebase } from "@react-native-firebase/auth";
 import { ButtonContainer, SafeArea } from "./StyleComponent";
 import { Alert } from "react-native";
 import { useEffect } from "react";
-
+import { getUserInformation } from "./getUserInformation";
 //해당 페이지에 사용되는 모든 버튼 style component
 
-const InformationModify = ({navigation}) => {
-  
+const InformationModify = ({ navigation }) => {
   const user = firebase.auth().currentUser;
   const [name, setName] = useState("jisoo");
   const [familyID, setFamilyID] = useState(0);
   const [role, setRole] = useState(-1);
   const [sex, setSex] = useState("");
+  const familyIDInput = useRef();
+  //기존 정보와 비교하였을 때 정보 변경 여부
+  const [diff, setDiff] = useState(false);
+  const onSubmitNameEditing = () => {
+    familyIDInput.current.focus();
+  };
   const UserClientCollection = firestore().collection("User_Client");
-  UserClientCollection.doc(user.uid).get().then(function(doc) {
-    if (doc.exists) {
-      // console.log(doc.data().userName)
-      setName(doc.data().userName)
-      setFamilyID(doc.data().familyID)
-      setRole(doc.data().role)
-      setSex(doc.data().sex)
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  }).catch(function(error) {
-    console.log("Error getting document:", error);
-  });
-    
-    
-  const addUser = async () => {
-    if (name === "" || role === -1 || sex === "") {
+
+  const updateUser = async () => {
+    if (name === "") {
       return Alert.alert("정보를 선택해주세요");
     }
-    
+
     try {
-      await addUserCollection.doc(user.uid).set({
+      await UserClientCollection.doc(user.uid).update({
         userName: name,
         familyID: familyID,
         //invitatonID는 이후 함수 만들어서 수정예정
         invitationID: user.uid,
         role: role,
-        sex: sex
+        sex: sex,
       });
-      
+
       setName("");
       setFamilyID(0);
       setRole(-1);
       console.log("Create Complete!");
-      navigation.navigate("Home")
+      navigation.navigate("Home");
     } catch (error) {
       console.log(error.message);
     }
   };
-  
+
+  useEffect(() => {
+    UserClientCollection.doc(user.uid)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          setName(doc.data().userName);
+          setFamilyID(doc.data().familyID);
+          setRole(doc.data().role);
+          setSex(doc.data().sex);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  }, []);
+
   return (
     <SafeArea>
       <View style={mainStyle.background}>
         <Text>회원정보</Text>
 
         <Text>이름</Text>
-        <Text>Name : {name}</Text>
         <TextInput
-          placeholder= {name}
+          placeholder={name}
           returnKeyType="next"
           value={name}
-          onChangeText={(name) => setName(name)}
+          onChangeText={(name) => {
+            setName(name);
+            name === getUserInformation("userName") ? null : setDiff(true);
+            console.log("외부", getUserInformation("userName"));
+            // getUserInformation("userName").then(function (resolvedData) {
+            //   console.log(resolvedData);
+            //   if (name !== resolvedData) {
+            //     setDiff(true);
+            //   }
+            // });
+          }}
           // ref={passwordInput}
-          // onSubmitEditing={onSubmitPasswordEditing}
+          onSubmitEditing={onSubmitNameEditing}
         ></TextInput>
         <Text>가족 ID가 있나요?</Text>
         <TextInput
-          placeholder="family id"
+          placeholder={{ familyID } ? "family id" : { familyID }}
           returnKeyType="next"
           value={familyID}
           //유효한지 확인하는 과정도 필요함
           onChangeText={(ID) => setFamilyID(ID)}
-          // ref={passwordInput}
-          // onSubmitEditing={onSubmitPasswordEditing}
+          ref={familyIDInput}
         ></TextInput>
         <Text> 내 아이디는 None</Text>
 
@@ -113,9 +129,19 @@ const InformationModify = ({navigation}) => {
             <Text>기타</Text>
           </ButtonContainer>
         </View>
-        <ButtonContainer onPress={addUser}>
+
+        <TouchableOpacity
+          style={{
+            borderRadius: 15,
+            backgroundColor: diff ? COLOR_GREEN : "grey",
+            padding: 10,
+            width: 100,
+            alignItems: "center",
+          }}
+          onPress={updateUser}
+        >
           <Text>완료</Text>
-        </ButtonContainer>
+        </TouchableOpacity>
       </View>
     </SafeArea>
   );
