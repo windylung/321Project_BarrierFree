@@ -7,14 +7,15 @@ import { useEffect, useState } from "react";
 
 export const AddFamily = () => {
   const user = firebase.auth().currentUser;
-  const UserClientCollection = firestore().collection("User_Client");
   const [isValid, setIsVallid] = useState(false);
   const [userID, setUserID] = useState("");
   const [invitationID, setInvitationID] = useState("");
   const [inputfamilyID, setinputFamilyID] = useState("");
   const [renderingData, setRenderingData] = useState("");
   const [familyID, setFamilyID] = useState(0);
+  const UserClientCollection = firestore().collection("User_Client");
   const FamilyCollection = firestore().collection("Family");
+  const AnswerCollection = firestore().collection("Answer");
   //doc을 user의 family에 포함
 
   const mergeFamily = async (doc) => {
@@ -70,7 +71,7 @@ export const AddFamily = () => {
       await FamilyCollection.add({
         family_member: [userID, doc.id],
       }).then((docRef) => {
-        console.log(docRef.id);
+        createAnswerTable(docRef.id)
         UserClientCollection.doc(doc.id).update("familyID", docRef.id);
         UserClientCollection.doc(userID).update("familyID", docRef.id);
       });
@@ -79,6 +80,19 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
+
+
+  const createAnswerTable = async (id) => {
+    try {
+      await AnswerCollection.doc(id).set({
+        answer : [],
+        currentIndex : 0
+      });
+      console.log("Create Complete!!");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   const onSubmitinputFamilyIDEditing = () => {
     if (inputfamilyID === invitationID) {
@@ -95,6 +109,7 @@ export const AddFamily = () => {
           if (familyID === 0 && doc.data().familyID === 0) {
             console.log("create Family");
             createFamily(doc);
+
           } else if (doc.data().familyID === 0) {
             console.log("addDocToFamily");
             addDocToFamily(doc);
@@ -162,13 +177,6 @@ export const AddFamily = () => {
 //     }
 //   }, []);
 
-  const renderItem = ({ item }) => {
-    return (
-      <View>
-        <Text>{item} **</Text>
-      </View>
-    );
-  };
 
   return (
     <SafeArea>
