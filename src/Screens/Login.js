@@ -118,7 +118,7 @@ export const Login = ({ navigation }) => {
           <Text style={Loginstyle.text}>소셜 연동</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => setIsFinding(true)}>
+        <TouchableOpacity onPress={() => navigation.navigate("FindingIDPW")}>
           <Text style={Loginstyle.text}>아이디/
           비밀번호찾기</Text>
         </TouchableOpacity>
