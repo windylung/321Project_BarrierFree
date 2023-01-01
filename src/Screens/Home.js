@@ -29,6 +29,7 @@ function Home({ navigation }) {
   };
   return (
     <View style={mainStyle.background}>
+
       <TouchableOpacity
         style={[mainStyle.btn, mainStyle.touchable]}
         onPress={() => navigation.navigate("Login")}
@@ -50,6 +51,7 @@ function Home({ navigation }) {
         <Text>가족 추가/연결</Text>
       </TouchableOpacity>
 
+
       <View style={{ flex: 0.8 }}>
         <Image
           source={require("../MainCharacter.png")}
@@ -66,6 +68,8 @@ function Home({ navigation }) {
           flex: 0.15,
         }}
       >
+
+        <View style={{ flexDirection: "row", justifyContent: "center", backgroundColor : "red", flex : 0.15}}>
         <TouchableOpacity
           style={[mainStyle.btn, mainStyle.touchable]}
           onPress={() =>
@@ -87,6 +91,7 @@ function Home({ navigation }) {
           <Text style={mainStyle.btnText}>정보제공</Text>
         </TouchableOpacity>
       </View>
+    </View>
     </View>
   );
 }
@@ -111,8 +116,7 @@ export const mainStyle = StyleSheet.create({
     fontSize: 15,
   },
   touchable: {
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   background_img1: {
     backgroundColor: COLOR_GREEN,
@@ -121,5 +125,7 @@ export const mainStyle = StyleSheet.create({
     flex: 1,
   },
 });
+
+  
 
 export default Home;
