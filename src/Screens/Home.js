@@ -9,56 +9,63 @@ import {
   Image,
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
-import '@react-native-firebase/auth';
+import "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
 import InformationInput from "./InformationInput";
-
 
 function Home({ navigation }) {
   //오늘 답변 작성 여부 (여기서 따질 필요는 없어보임)
   const [answer, setAnswer] = useState(true);
   const getUser = async () => {
-    const dbuser = firebase.firestore().collection('User_Client').get();
+    const dbuser = firebase.firestore().collection("User_Client").get();
     (await dbuser).forEach((user) => console.log(user.data()));
-  }
+  };
   useEffect(() => {
-    getUser();}, [])
-  
+    getUser();
+  }, []);
+
   const logout = () => {
     firebase.auth().signOut();
-  }
+  };
   return (
     <View style={mainStyle.background}>
-      
-        <TouchableOpacity
-          style={[mainStyle.btn, mainStyle.touchable]}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={mainStyle.btnText}>로그인</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[mainStyle.btn, mainStyle.touchable]}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={mainStyle.btnText}>로그인</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={logout}>
-          <Text>로그아웃</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("InformationModify")}>
-          <Text>회원정보수정</Text>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={logout}>
+        <Text>로그아웃</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("InformationModify")}
+      >
+        <Text>회원정보수정</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AddFamily")}
+      >
+        <Text>가족 추가/연결</Text>
+      </TouchableOpacity>
 
+      <View style={{ flex: 0.8 }}>
+        <Image
+          source={require("../MainCharacter.png")}
+          style={{ flex: 1.3 }}
+        ></Image>
+        <View style={mainStyle.background_img1}></View>
+      </View>
 
-
-
-        <View style = {{flex : 0.8,}}>
-          <Image
-              source={require("../MainCharacter.png")}
-              style={{ flex : 1.3 }}
-            ></Image>
-            <View style={mainStyle.background_img1}></View>
-        </View>
-
-
-
-
-        <View style={{ flexDirection: "row", justifyContent: "center", backgroundColor : "red", flex : 0.15}}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          backgroundColor: "red",
+          flex: 0.15,
+        }}
+      >
         <TouchableOpacity
           style={[mainStyle.btn, mainStyle.touchable]}
           onPress={() =>
@@ -107,13 +114,12 @@ export const mainStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  background_img1 : {
+  background_img1: {
     backgroundColor: COLOR_GREEN,
-    borderTopLeftRadius : 200,
-    borderTopRightRadius : 200,
-    flex : 1
+    borderTopLeftRadius: 200,
+    borderTopRightRadius: 200,
+    flex: 1,
   },
 });
-
 
 export default Home;
