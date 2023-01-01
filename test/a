@@ -87,9 +87,9 @@ const InformationModify = ({ navigation }) => {
           <View style={{flex : 0.5}}>
           
             <View style={Loginstyle.rightalign}>
-              <Text style={Loginstyle.text}>아이디 : {user.email} </Text>
+              <Text style={Loginstyle.text}>아이디 : </Text>
               
-              <Text style={Loginstyle.text}>비밀번호 :  </Text>
+              <Text style={Loginstyle.text}>비밀번호 : </Text>
 
             </View>
           </View>
