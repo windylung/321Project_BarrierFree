@@ -14,7 +14,6 @@ import { ButtonContainer, SafeArea } from "./StyleComponent";
 import { Alert } from "react-native";
 import { useEffect } from "react";
 import { getUserInformation } from "./getUserInformation";
-import { Loginstyle } from "./Login";
 //해당 페이지에 사용되는 모든 버튼 style component
 
 const InformationModify = ({ navigation }) => {
@@ -77,63 +76,27 @@ const InformationModify = ({ navigation }) => {
   return (
     <SafeArea>
       <View style={mainStyle.background}>
-        
-        <View style={{flex : 0.4}}>
-          <Text style={{ fontSize: 24, textAlign: "center",   marginTop: 100}}>설정 - 정보수정</Text>
-        </View>
-      
+        <Text>회원정보</Text>
 
-        <View style={{flexDirection : "row", flex : 0.2}}>
-          <View style={{flex : 0.5}}>
-          
-            <View style={Loginstyle.rightalign}>
-              <Text style={Loginstyle.text}>아이디 : {user.email} </Text>
-              
-              <Text style={Loginstyle.text}>비밀번호 :  </Text>
-
-            </View>
-          </View>
-
-          <View>
-            
-          </View>
-        </View>
-        
-
-        <View style={{flexDirection : "row", flex : 0.3}}>
-          <View style={{flex : 0.5}}>
-          
-            <View style={Loginstyle.rightalign}>
-              <Text style={Loginstyle.text}>이름 : </Text>
-              
-              <Text style={Loginstyle.text}>가족 내 역할 : </Text>
-
-              <Text style={Loginstyle.text}>성별 : </Text>
-            </View>
-          </View>
-
-          <View>
-          <TextInput
-            placeholder={name}
-            returnKeyType="next"
-            value={name}
-            onChangeText={(name) => {
-              setName(name);
-              name === getUserInformation("userName") ? null : setDiff(true);
-              console.log("외부", getUserInformation("userName"));
-              // getUserInformation("userName").then(function (resolvedData) {
-              //   console.log(resolvedData);
-              //   if (name !== resolvedData) {
-              //     setDiff(true);
-              //   }
-              // });
-            }}
-            // ref={passwordInput}
-            onSubmitEditing={onSubmitNameEditing}
-          ></TextInput>
-          </View>
-        </View>
-        
+        <Text>이름</Text>
+        <TextInput
+          placeholder={name}
+          returnKeyType="next"
+          value={name}
+          onChangeText={(name) => {
+            setName(name);
+            name === getUserInformation("userName") ? null : setDiff(true);
+            console.log("외부", getUserInformation("userName"));
+            // getUserInformation("userName").then(function (resolvedData) {
+            //   console.log(resolvedData);
+            //   if (name !== resolvedData) {
+            //     setDiff(true);
+            //   }
+            // });
+          }}
+          // ref={passwordInput}
+          onSubmitEditing={onSubmitNameEditing}
+        ></TextInput>
         <Text>가족 ID가 있나요?</Text>
         <TextInput
           placeholder={{ familyID } ? "family id" : { familyID }}
@@ -185,3 +148,4 @@ const InformationModify = ({ navigation }) => {
 };
 
 export default InformationModify;
+
