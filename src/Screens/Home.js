@@ -47,6 +47,9 @@ function Home({ navigation }) {
           <Text>회원정보수정</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => navigation.navigate("AddFamily")}>
+          <Text>가족 추가/연결</Text>
+        </TouchableOpacity>
 
 
 

@@ -71,7 +71,7 @@ export const Login = ({ navigation }) => {
           </View>
         </View>
 
-      <View style={{flex : 0.2}}>
+      <View style={{flex : 0.4}}>
         <View style={{ flexDirection: "row" , justifyContent: "center"}}>
             <Text style={Loginstyle.text}>ID : </Text>
             <TextInput
@@ -99,9 +99,14 @@ export const Login = ({ navigation }) => {
         </View>
       </View>
       
-      
+      <TouchableOpacity
+          style={Loginstyle.okaybutton}
+          
+        >
+          <Text style={Loginstyle.btnText}>완료</Text>
+        </TouchableOpacity>
 
-      <View style={{ flexDirection: "row"  , justifyContent: "center"}}>
+      <View style={{ flexDirection: "row"  , justifyContent: "center", marginTop : 20}}>
         <TouchableOpacity
           style={{ marginHorizontal: 10 }}
           onPress={() => navigation.navigate("SignUp")}

@@ -3,7 +3,8 @@ import { Text, View } from "react-native"
 import { getUserInformation } from "./getUserInformation";
 import { ButtonContainer, SafeArea } from "./StyleComponent"
 
-export const AddFamily = () => {
+
+export const AddFamily = ({ navigation }) => {
     // const [invitationID, setInvitationID] = useState(getUserInformation("InvitationID"));
     // useEffect(() => {
     //     // console.log(getUserInformation("role"));
@@ -24,4 +25,6 @@ export const AddFamily = () => {
         </View>
     </SafeArea>
         );
-}
+};
+
+export default AddFamily;

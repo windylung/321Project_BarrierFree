@@ -14,7 +14,7 @@ import { ButtonContainer, SafeArea } from "./StyleComponent";
 import { Alert } from "react-native";
 import { Loginstyle } from "./Login";
 import * as React from 'react';
-import { RadioButton } from 'react-native-paper';
+import { CheckBox } from 'react-native-elements';
 
 
 //해당 페이지에 사용되는 모든 버튼 style component
@@ -24,6 +24,45 @@ const InformationInput = ({navigation}) => {
   const user = firebase.auth().currentUser;
   const [name, setName] = useState("");
   const [familyID, setFamilyID] = useState(0);
+
+  const [Parents, setParents] = useState(false);
+  const [Children, setChildren] = useState(false);
+
+  const [Male, setMale] = useState(false);
+  const [Female, setFemale] = useState(false);
+  const [Other, setOther] = useState(false);
+
+  const rolePartents = () => {
+    setParents(true);
+    setChildren(false);
+    setRole("Parents");
+  }
+
+  const roleChildren = () => {
+    setParents(false);
+    setChildren(true);
+    setRole("Children");
+  }
+
+  const genderMale = () => {
+    setMale(true);
+    setFemale(false);
+    setOther(false);
+    setSex("Male");
+  }
+  const genderFemale = () => {
+    setMale(false);
+    setFemale(true);
+    setOther(false);
+    setSex("Female");
+  }
+  const genderOther = () => {
+    setMale(false);
+    setFemale(false);
+    setOther(true);
+    setSex("Other");
+  }
+
   const [role, setRole] = useState(-1);
   const [sex, setSex] = useState("");
 
@@ -76,13 +115,12 @@ const InformationInput = ({navigation}) => {
 
         <View style={Loginstyle.rowalign}>
         
-          <View style={Loginstyle.rightalign}>
+          <View style={{    alignItems: 'flex-end', flex : 0.9}}>
             <Text style={Loginstyle.text}>이름 : </Text>
             
             <Text style={Loginstyle.text}>가족 내 역할 : </Text>
 
             <Text style={Loginstyle.text}>성별 : </Text>
-            
           </View>
 
           <View>
@@ -95,60 +133,66 @@ const InformationInput = ({navigation}) => {
               // onSubmitEditing={onSubmitPasswordEditing}
             ></TextInput>
 
-            <View style={{flexDirection: "row",}}>
-              <RadioButton
-                value="부모"
-                status={ checked === '부모' ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked('부모'); setRole("부모");}}
-                color = {COLOR_GREEN}
-                label = "부모"
+            <View style={{ flexDirection: "row" ,  alignContent : "center", justifyContent : "center"}}>
+              <CheckBox
+              title="부모"
+              checked={Parents}
+              onPress={rolePartents}
+              center
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
               />
 
-            
-              <RadioButton
-                value="아동"
-                status={ checked === '아동' ? 'checked' : 'unchecked' }
-                onPress={() => {setChecked('아동'); setRole("아동")}}
-                color = {COLOR_GREEN}
-              >
-
-              </RadioButton>
-            </View>
-
-
-
-            <View style={{ flexDirection: "row" }}>
-              <ButtonContainer onPress={() => setSex("남")}>
-                <Text>남</Text>
-              </ButtonContainer>
-              <ButtonContainer onPress={() => setSex("여")}>
-                <Text>여</Text>
-              </ButtonContainer>
-              <ButtonContainer onPress={() => setSex("기타")}>
-                <Text>기타</Text>
-              </ButtonContainer>
+              <CheckBox
+              title="자녀"
+              center
+              checked={Children}
+              onPress={roleChildren}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />       
             </View> 
 
-           </View> 
-        
-        </View>
-        
-        
-        <View >
-          <Text>가족 ID가 있나요?</Text>
-          <TextInput
-            placeholder="family id"
-            returnKeyType="next"
-            value={familyID}
-            //유효한지 확인하는 과정도 필요함
-            onChangeText={(ID) => setFamilyID(ID)}
-            // ref={passwordInput}
-            // onSubmitEditing={onSubmitPasswordEditing}
-          ></TextInput>
-          <Text> 내 아이디는 None</Text>
-        </View>
-        
+            <View style={{ flexDirection: "row" ,  alignContent : "center", justifyContent : "center"}}>
+              <CheckBox
+              title="남자"
+              checked={Male}
+              onPress={genderMale}
+              center
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />
 
+              <CheckBox
+              title="여자"
+              center
+              checked={Female}
+              onPress={genderFemale}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              /> 
+
+              <CheckBox
+              title="기타"
+              center
+              checked={Other}
+              onPress={genderOther}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3 , marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />           
+            </View> 
+          </View>
+        </View>
         
 
 
