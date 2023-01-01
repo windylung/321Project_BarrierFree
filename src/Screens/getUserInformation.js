@@ -30,7 +30,6 @@ export function getUserInformation(type) {
         data = doc.data()[type];
         // console.log("안", data);
       }
-      return data;
     });
   // console.log("밖", data);
   return data;
