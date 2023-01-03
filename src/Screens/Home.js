@@ -13,7 +13,8 @@ import "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
 import InformationInput from "./InformationInput";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+import Question from "./Question";
+const Tab = createBottomTabNavigator();
 
 function Home({ navigation }) {
   //오늘 답변 작성 여부 (여기서 따질 필요는 없어보임)
@@ -44,26 +45,12 @@ function Home({ navigation }) {
         <Text>가족 추가/연결</Text>
       </TouchableOpacity>
 
-<<<<<<< HEAD
       <View style={{ flex: 0.7 }}>
         <Image
           source={require("../MainCharacter-removebg-preview.png")}
           style={{ resizeMode: "cover", width: "100%", height: "100%" }}
         ></Image>
       </View>
-=======
-
-
-
-
-        <View style = {{flex : 0.8,}}>
-          <Image
-              source={require("../MainCharacter.png")}
-              style={{ flex : 1.3 }}
-            ></Image>
-            
-        </View>
->>>>>>> 0bf174ef0383b58a5f339531cf2ba451164807a7
 
       <View
         style={{
@@ -94,7 +81,10 @@ function Home({ navigation }) {
           <Text style={mainStyle.btnText}>정보제공</Text>
         </TouchableOpacity>
       </View>
-      
+      {/* <Tab.Navigator>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Settings" component={Question} />
+      </Tab.Navigator> */}
     </View>
   );
 }
