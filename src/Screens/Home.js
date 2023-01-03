@@ -30,6 +30,7 @@ function Home({ navigation }) {
   const logout = () => {
     firebase.auth().signOut();
   };
+
   return (
     <View style={mainStyle.background}>
       <TouchableOpacity onPress={logout}>

@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,6 +19,9 @@ import { COLOR_DEEPGREEN, COLOR_GREEN } from "./src/Color";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import BottomTabs from "./src/Screens/BottomTabs";
 import { FindingIDPW } from "./src/Screens/FindingIDPW";
+import { SocialLogin } from "./src/Screens/SocialLogin";
+import { StyleSheet } from "react-native";
+import DrawerTabs from "./src/Screens/DrawerTabs";
 
 const Stack = createNativeStackNavigator();
 // function Root() {
@@ -29,10 +33,6 @@ const Stack = createNativeStackNavigator();
 //     </Drawer.Navigator>
 //   );
 // }
-
-
-
-
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,16 +52,26 @@ export default function App() {
   return (
     <NavigationContainer>
       {
-        <Stack.Navigator
-          
-          screenOptions={{ headerShown: true}}
-        >
+        <Stack.Navigator screenOptions={{ headerShown: true }}>
           {isLoggedIn === false ? (
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={AppStyle.Login}
+            />
           ) : (
             <>
-            <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }}/>
-            <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen
+                name="BottomTabs"
+                component={BottomTabs}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen
+                name="DrawerTabs"
+                component={DrawerTabs}
+                options={{ headerShown: false }}
+              />
             </>
           )}
           <Stack.Screen name="SignUp" component={SignUp} />
@@ -80,19 +90,44 @@ export default function App() {
             component={AddFamily}
             options={{
               title: "가족 구성원 연결",
-              headerStyle: {
-                backgroundColor: COLOR_DEEPGREEN,
-              },
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
             }}
           />
-          <Stack.Screen name="FindingIDPW" component={FindingIDPW} />
-      
+          <Stack.Screen
+            name="FindingIDPW"
+            component={FindingIDPW}
+            options={AppStyle.FindingIDPW}
+          />
+          <Stack.Screen
+            name="SocialLogin"
+            component={SocialLogin}
+            options={AppStyle.SocialLogin}
+          />
         </Stack.Navigator>
       }
     </NavigationContainer>
   );
 }
+
+const header = {
+  headerStyle: {
+    backgroundColor: COLOR_DEEPGREEN,
+  },
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    fontWeight: "bold",
+  },
+};
+const AppStyle = StyleSheet.create({
+  Login: {
+    title: "로그인",
+    ...header,
+  },
+  FindingIDPW: {
+    title: "비밀번호 찾기",
+    ...header,
+  },
+  SocialLogin: {
+    title: "소셜 연동",
+    ...header,
+  },
+});

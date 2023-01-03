@@ -6,25 +6,29 @@ import {
   TouchableOpacity,
   View,
   Modal,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import auth from "@react-native-firebase/auth";
+import {
+  AppleButton,
+  appleAuth,
+} from "@invertase/react-native-apple-authentication";
 import firestore from "@react-native-firebase/firestore";
 import { mainStyle } from "./Home";
-import { COLOR_GREEN } from "../Color";
+import { COLOR_GREEN, COLOR_GREY } from "../Color";
 
-export const Login = ({ navigation }) => {
+export const Login = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-  const [isFinding, setIsFinding] = useState(false);
-  const [findingEmail, setFindingEmail] = useState("");
   const [password, setPassword] = useState("");
   const passwordInput = useRef();
   const onSubmitEmailEditing = () => {
     passwordInput.current.focus();
   };
   const onSubmitPasswordEditing = async () => {
+    console.log("login");
+    console.log("here")
     if (email === "" || password === "") {
       return Alert.alert("아이디와 비밀번호를 입력해주세요");
     }
@@ -41,39 +45,24 @@ export const Login = ({ navigation }) => {
     }
   };
 
-  const findingPassword = async (email) => {
-    console.log(email);
-    if (email === "") {
-      return Alert.alert("이메일을 입력해주세요");
-    }
+  useEffect(() => {
+    if (route.params?.ID !== null) console.log(route.params);
+    setEmail(route.params?.ID);
+  }, [route.params?.ID]);
 
-    try {
-      await auth().sendPasswordResetEmail(email);
-    } catch (e) {
-      console.log(e.code);
-      switch (e.code) {
-        case "auth/user-not-found":
-          return Alert.alert("user-not-found");
-        case "auth/invalid-email":
-          return Alert.alert("invalid-email");
-        default:
-          return Alert.alert("error!");
-      }
-    }
-  };
-  // const addCollection = firestore().collection('users');
   return (
     <SafeAreaView style={mainStyle.background}>
-
-        <View style={{flex : 0.5, justifyContent: "center"}}>
-          <View style={{backgroundColor: COLOR_GREEN, flex : 0.2, justifyContent: "center"}}>
-            <Text style={{textAlign: "center", fontSize: 24}}>로그인</Text>
-          </View>
-        </View>
-
-      <View style={{flex : 0.4}}>
-        <View style={{ flexDirection: "row" , justifyContent: "center"}}>
-            <Text style={Loginstyle.text}>ID : </Text>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 0.3, justifyContent: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              paddingHorizontal: "20%",
+              alignItems: "center",
+            }}
+          >
+            <Text style={[Loginstyle.text, { width: "30%" }]}>ID </Text>
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
@@ -83,10 +72,17 @@ export const Login = ({ navigation }) => {
               value={email}
               onChangeText={(text) => setEmail(text)}
               onSubmitEditing={onSubmitEmailEditing}
+              style={{ width: "70%" }}
             ></TextInput>
-        </View>
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-            <Text style={Loginstyle.text}>PW : </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              paddingHorizontal: "20%",
+            }}
+          >
+            <Text style={[Loginstyle.text, { width: "30%" }]}>Password</Text>
             <TextInput
               placeholder="Password"
               secureTextEntry
@@ -94,77 +90,68 @@ export const Login = ({ navigation }) => {
               value={password}
               ref={passwordInput}
               onChangeText={(text) => setPassword(text)}
-              onSubmitEditing={onSubmitPasswordEditing}
+              onSubmitEditing={() => onSubmitPasswordEditing()}
+              style={{ width: "70%" }}
             ></TextInput>
+          </View>
         </View>
-      </View>
-      
-      <TouchableOpacity
-          style={Loginstyle.okaybutton}
-          
-        >
-          <Text style={Loginstyle.btnText}>완료</Text>
-        </TouchableOpacity>
-
-      <View style={{ flexDirection: "row"  , justifyContent: "center", marginTop : 20}}>
         <TouchableOpacity
-          style={{ marginHorizontal: 10 }}
-          onPress={() => navigation.navigate("SignUp")}
+          style={[Loginstyle.okaybutton, { paddingVertical: 10 }]}
+          onPress={() => {
+            onSubmitPasswordEditing();
+          }}
         >
-          <Text style={Loginstyle.text}>회원가입</Text>
+          <Text style={[Loginstyle.btnText, { fontWeight: "600" }]}>완료</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={Loginstyle.text}>소셜 연동</Text>
-        </TouchableOpacity>
+        <View
+          style={{
+            marginHorizontal: 50,
+            marginTop: 20,
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text style={Loginstyle.text}>회원가입</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("FindingIDPW")}>
-          <Text style={Loginstyle.text}>아이디/
-          비밀번호찾기</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={() => navigation.navigate("SocialLogin")}>
+            <Text style={Loginstyle.text}>소셜연동</Text>
+          </TouchableOpacity>
 
-      {isFinding === true ? (
-        <View>
-          <Text>비밀번호 재설정 메일을 받을 이메일 주소를 입력해주세요</Text>
-          <TextInput
-            placeholder="Email"
-            returnKeyType="send"
-            value={findingEmail}
-            onChangeText={(text) => setFindingEmail(text)}
-            onSubmitEditing={() => findingPassword(findingEmail)}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate("FindingIDPW")}>
+            <Text style={Loginstyle.text}>비밀번호</Text>
+          </TouchableOpacity>
         </View>
-      ) : null}
+      </View>
     </SafeAreaView>
   );
 };
 
 export const Loginstyle = StyleSheet.create({
   text: {
-
-    marginRight : 20,
-    marginVertical : 3, 
-    fontSize : 16,
+    marginRight: 20,
+    marginVertical: 3,
+    fontSize: 16,
   },
   rowalign: {
-    flex : 0.4, 
-    paddingVertical : 50,
-    flexDirection: "row", 
-     marginBottom : 20
+    flex: 0.4,
+    paddingVertical: 50,
+    flexDirection: "row",
+    marginBottom: 20,
   },
-  rightalign :{
-    flex : 0.75,
-    alignItems: 'flex-end',
-
+  rightalign: {
+    flex: 0.75,
+    alignItems: "flex-end",
   },
-  centeralign : {
+  centeralign: {
     justifyContent: "center",
   },
-  okaybutton : {
-    paddingVertical : 8,
+  okaybutton: {
+    paddingVertical: 8,
     backgroundColor: COLOR_GREEN,
-    marginHorizontal : 50, 
+    marginHorizontal: 50,
     borderRadius: 20,
     justifyContent: "center",
   },
@@ -172,5 +159,4 @@ export const Loginstyle = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
-
 });
