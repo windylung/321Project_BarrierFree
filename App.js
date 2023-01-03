@@ -60,19 +60,12 @@ export default function App() {
               options={AppStyle.Login}
             />
           ) : (
-            <>
-              <Stack.Screen
-                name="BottomTabs"
-                component={BottomTabs}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen name="Home" component={Home} />
               <Stack.Screen
                 name="DrawerTabs"
                 component={DrawerTabs}
-                options={{ headerShown: false }}
+                options={{headerShown: false }}
               />
-            </>
+  
           )}
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Question" component={Question} />
