@@ -17,6 +17,7 @@ import { COLOR_DEEPGREEN, COLOR_GREEN } from "./src/Color";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import BottomTabs from "./src/Screens/BottomTabs";
+import { FindingIDPW } from "./src/Screens/FindingIDPW";
 
 const Stack = createNativeStackNavigator();
 // function Root() {
@@ -88,6 +89,7 @@ export default function App() {
               },
             }}
           />
+          <Stack.Screen name="FindingIDPW" component={FindingIDPW} />
       
         </Stack.Navigator>
       }
