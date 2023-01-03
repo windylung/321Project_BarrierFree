@@ -1,9 +1,20 @@
 import firestore from "@react-native-firebase/firestore";
 import { firebase } from "@react-native-firebase/auth";
-import { Alert, FlatList, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { ButtonContainer, SafeArea } from "./StyleComponent";
-import { COLOR_DEEPGREEN } from "../Color";
+import { COLOR_DEEPGREEN, COLOR_GREEN, COLOR_GREY } from "../Color";
 import { useEffect, useState } from "react";
+import Clipboard from "@react-native-clipboard/clipboard";
+import styled from "styled-components";
 
 export const AddFamily = () => {
   const user = firebase.auth().currentUser;
@@ -18,6 +29,9 @@ export const AddFamily = () => {
   const AnswerCollection = firestore().collection("Answer");
   //doc을 user의 family에 포함
 
+  const copyToClipboard = () => {
+    Clipboard.setString(invitationID);
+  };
   const mergeFamily = async (doc) => {
     try {
       await FamilyCollection.doc(doc.data().familyID)
@@ -71,7 +85,7 @@ export const AddFamily = () => {
       await FamilyCollection.add({
         family_member: [userID, doc.id],
       }).then((docRef) => {
-        createAnswerTable(docRef.id)
+        createAnswerTable(docRef.id);
         UserClientCollection.doc(doc.id).update("familyID", docRef.id);
         UserClientCollection.doc(userID).update("familyID", docRef.id);
       });
@@ -81,18 +95,17 @@ export const AddFamily = () => {
     }
   };
 
-
   const createAnswerTable = async (id) => {
     try {
       await AnswerCollection.doc(id).set({
-        answer : [],
-        currentIndex : 0
+        answer: [],
+        currentIndex: 0,
       });
       console.log("Create Complete!!");
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
   const onSubmitinputFamilyIDEditing = () => {
     if (inputfamilyID === invitationID) {
@@ -109,7 +122,6 @@ export const AddFamily = () => {
           if (familyID === 0 && doc.data().familyID === 0) {
             console.log("create Family");
             createFamily(doc);
-
           } else if (doc.data().familyID === 0) {
             console.log("addDocToFamily");
             addDocToFamily(doc);
@@ -140,6 +152,14 @@ export const AddFamily = () => {
     }
   };
 
+  const renderItem = (item) => {
+    return (
+      <View>
+        <Text>{item}</Text>
+      </View>
+    );
+  };
+
   useEffect(() => {
     UserClientCollection.doc(user.uid)
       .get()
@@ -160,55 +180,130 @@ export const AddFamily = () => {
       });
   }, []);
 
-//   useEffect(() => {
-//     try {
-//       FamilyCollection.doc(familyID)
-//         .get()
-//         .then(function (doc) {
-//           // if (doc.exists){
-//           //     setRenderingData(doc.data().family_member);
-//           // }
-//           console.log(doc.data().family_member);
-//         });
-//     } catch {
-//       (error) => {
-//         console.log(error);
-//       };
-//     }
-//   }, []);
+  useEffect(() => {
+    FamilyCollection.doc(familyID)
+      .get()
+      .then((doc) => {
+        DATA = doc.data().family_member
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
+  //   useEffect(() => {
+  //     try {
+  //       FamilyCollection.doc(familyID)
+  //         .get()
+  //         .then(function (doc) {
+  //           // if (doc.exists){
+  //           //     setRenderingData(doc.data().family_member);
+  //           // }
+  //           console.log(doc.data().family_member);
+  //         });
+  //     } catch {
+  //       (error) => {
+  //         console.log(error);
+  //       };
+  //     }
+  //   }, []);
 
   return (
     <SafeArea>
-      <View>
-        <Text>설정 - 가족 추가/연결</Text>
-        <Text>나의 코드{invitationID}</Text>
-        <View style={{ alignItems: "center" }}>
-          <Text>가족으로 연결할 상대의 코드를 입력해주세요!</Text>
-          {/* <Text>가족 코드{getUserInformation("inputfamilyID")}</Text> */}
-          <TextInput
-            placeholder={"invitation code"}
-            returnKeyType="done"
-            autoCapitalize="none"
+      <View style={{ padding: 30, flex: 0.8 }}>
+        <View
+          style={{
+            flex: 2,
+            alignSelf: "center",
+            alignItems: "flex-start",
+            justifyContent: "center",
+          }}
+        >
+          <Text style={{ fontWeight: "bold" }}>나의 코드</Text>
+          <View
             style={{
-              backgroundColor: COLOR_DEEPGREEN,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text> {invitationID}</Text>
+            <TouchableOpacity
+              style={{ marginHorizontal: 5 }}
+              onPress={copyToClipboard}
+            >
+              <Image
+                source={require("../Image/copy_icon.png")}
+                style={{
+                  resizeMode: "contain",
+                  width: 23,
+                }}
+              ></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View
+          style={{ alignItems: "center", flex: 3, justifyContent: "center" }}
+        >
+          <Text>가족으로 연결할 상대방의 코드를 입력해주세요!</Text>
+          {/* <Text>가 족 코드{getUserInformation("inputfamilyID")}</Text> */}
+          <View style={{ flexDirection: "row" }}>
+            <TextInput
+              placeholder={"invitation code"}
+              returnKeyType="done"
+              autoCapitalize="none"
+              style={{
+                backgroundColor: COLOR_DEEPGREEN,
+                padding: 10,
+                borderRadius: 100,
+                width: "60%",
+                marginVertical: 10,
+              }}
+              value={inputfamilyID}
+              onChangeText={(ID) => setinputFamilyID(ID)}
+            ></TextInput>
+            <TouchableOpacity
+              onPress={onSubmitinputFamilyIDEditing}
+              style={{
+                backgroundColor: COLOR_GREEN,
+                padding: 10,
+                borderRadius: 100,
+                width: "20%",
+                marginVertical: 10,
+                marginHorizontal: 5,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>연결</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "grey",
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+        <View style={{ alignItems: "center", flex: 5, marginVertical: 10 }}>
+          <TouchableOpacity
+            onPress={onSubmitinputFamilyIDEditing}
+            style={{
+              backgroundColor: COLOR_GREEN,
               padding: 10,
               borderRadius: 100,
-              width: 156,
+              width: "80%",
+              marginVertical: 10,
+              marginHorizontal: 5,
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            value={inputfamilyID}
-            onChangeText={(ID) => setinputFamilyID(ID)}
-          ></TextInput>
-          <ButtonContainer onPress={onSubmitinputFamilyIDEditing}>
-            <Text>연결</Text>
-          </ButtonContainer>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <ButtonContainer>
-            <Text>연결된 가족 목록</Text>
-          </ButtonContainer>
+          >
+            <Text style={{ fontSize: 16, fontWeight: "600" }}>
+              연결된 가족 목록
+            </Text>
+          </TouchableOpacity>
           {/* <FlatList
-            data={renderingData}
+            data={DATA}
             renderItem={renderItem}
             keyExtractor={(item) => String(item.id)}
           /> */}
