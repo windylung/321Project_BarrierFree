@@ -7,6 +7,7 @@ import {
   TouchableOpacitytyleSheet,
   StyleSheet,
   Image,
+  
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import "@react-native-firebase/auth";
@@ -27,6 +28,8 @@ function Home({ navigation }) {
   const logout = () => {
     firebase.auth().signOut();
   };
+
+  
   return (
     <View style={mainStyle.background}>
 
@@ -55,14 +58,7 @@ function Home({ navigation }) {
 
 
 
-        <View style = {{flex : 0.8,}}>
-          <Image
-              source={require("../MainCharacter.png")}
-              style={{ flex : 1.3 }}
-            ></Image>
-            
-        </View>
-
+        
       <View
         style={{
           flexDirection: "row",
