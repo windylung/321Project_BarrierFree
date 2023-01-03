@@ -13,17 +13,35 @@ import { SignUp } from "./src/Screens/SignUp";
 import auth from "@react-native-firebase/auth";
 import InformationModify from "./src/Screens/InformationModify";
 import { AddFamily } from "./src/Screens/AddFamily";
+import { COLOR_DEEPGREEN, COLOR_GREEN } from "./src/Color";
+
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import BottomTabs from "./src/Screens/BottomTabs";
 import { FindingIDPW } from "./src/Screens/FindingIDPW";
 
 const Stack = createNativeStackNavigator();
+// function Root() {
+//   return (
+//     <Drawer.Navigator>
+//       <Drawer.Screen name="Home" component={Home} />
+//       <Drawer.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="Settings" component={Settings} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+
+
+
+
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
     console.log(auth().currentUser);
     auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user)
-        console.log("here")
+        console.log(user);
+        console.log("here");
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -35,15 +53,16 @@ export default function App() {
     <NavigationContainer>
       {
         <Stack.Navigator
-        initialRouteName={isLoggedIn === true ? "Home" : "Login"}
-        screenOptions={{ headerShown: false }}
+          
+          screenOptions={{ headerShown: true}}
         >
           {isLoggedIn === false ? (
-        <Stack.Screen name="Login" component={Login} />
-
+            <Stack.Screen name="Login" component={Login} />
           ) : (
+            <>
+            <Stack.Screen name="BottomTabs" component={BottomTabs} options={{ headerShown: false }}/>
             <Stack.Screen name="Home" component={Home} />
-
+            </>
           )}
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Question" component={Question} />
@@ -52,12 +71,27 @@ export default function App() {
           <Stack.Screen name="AnswerList" component={AnswerList} />
           <Stack.Screen name="MettingMain" component={MettingMain} />
           <Stack.Screen name="InformationInput" component={InformationInput} />
-          <Stack.Screen name="InformationModify" component={InformationModify} />
-          <Stack.Screen name="AddFamily" component={AddFamily} />
+          <Stack.Screen
+            name="InformationModify"
+            component={InformationModify}
+          />
+          <Stack.Screen
+            name="AddFamily"
+            component={AddFamily}
+            options={{
+              title: "가족 구성원 연결",
+              headerStyle: {
+                backgroundColor: COLOR_DEEPGREEN,
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen name="FindingIDPW" component={FindingIDPW} />
-          
+      
         </Stack.Navigator>
-        
       }
     </NavigationContainer>
   );
