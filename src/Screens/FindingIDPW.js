@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import auth from "@react-native-firebase/auth";
+import auth, { firebase } from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { mainStyle } from "./Home";
 import { COLOR_BG, COLOR_DEEPGREEN, COLOR_GREEN, COLOR_GREY } from "../Color";
@@ -18,8 +18,20 @@ import { Loginstyle } from "./Login";
 export const FindingIDPW = ({ navigation, route }) => {
   const [isFinding, setIsFinding] = useState(false);
   const [findingEmail, setFindingEmail] = useState("");
-  
 
+  // const AppleFindingPassword = () => {
+  //   // let credential = OAuthProvider.credential(
+  //   //   withProviderID :  "apple.com",
+  //   //   IDToken: appleIdToken,
+  //   //   rawNonce: rawNonce
+  //   // );
+  //   var user = firebase.auth().currentUser;
+  //   var credentials = firebase.auth.EmailAuthProvider.credential(
+  //     user.email, "DLwltn1126!"
+  //   );
+  //   user.reauthenticateWithCredential(credentials)
+  //   // user.reauthenticateWithCredential(credentials);
+  // };
   const findingPassword = async (email) => {
     console.log(email);
     if (email === "") {
@@ -120,6 +132,7 @@ export const FindingIDPW = ({ navigation, route }) => {
             로그인
           </Text>
         </TouchableOpacity>
+        
       </View>
     </SafeAreaView>
   );

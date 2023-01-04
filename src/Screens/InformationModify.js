@@ -74,6 +74,8 @@ const InformationModify = ({ navigation }) => {
   };
   const UserClientCollection = firestore().collection("User_Client");
 
+
+
   const updateUser = async () => {
     if (name === "") {
       return Alert.alert("정보를 선택해주세요");

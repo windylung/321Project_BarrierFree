@@ -7,7 +7,7 @@ import { View } from "react-native";
 import { SafeArea } from "./StyleComponent";
 import { useState } from "react";
 
-export const SocialLogin = () => {
+export const SocialLogin = ({navigation}) => {
   const [isLoadingEnd, setIsLoadingEnd] = useState(false);
   const checkLoggedIn = () => {
     auth().onAuthStateChanged((user) => {
@@ -57,7 +57,10 @@ console.log(isLoadingEnd)
           }}
           onPress={() =>
             onAppleButtonPress()
-              .then(() => {console.log("Apple sign-in complete!")}
+              .then(() => {
+                console.log("Apple sign-in complete!")
+                navigation.navigate("InformationInput");
+            }
               )
               .catch((error) => console.log(error))
           }

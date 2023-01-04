@@ -97,7 +97,7 @@ const InformationInput = ({navigation}) => {
       setFamilyID(0);
       setRole(-1);
       console.log("Create Complete!");
-      navigation.navigate("Home")
+      navigation.navigate("DrawerTabs")
     } catch (error) {
       console.log(error.message);
     }
@@ -197,7 +197,7 @@ const InformationInput = ({navigation}) => {
         
 
 
-        <TouchableOpacity onPress={addUser} style ={[Loginstyle.okaybutton, Loginstyle.centeralign]}>
+        <TouchableOpacity onPress={() => addUser()} style ={[Loginstyle.okaybutton, Loginstyle.centeralign]}>
           <Text style={Loginstyle.btnText}>완료</Text>
         </TouchableOpacity>
       </View>

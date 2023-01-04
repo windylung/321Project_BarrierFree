@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
-import "@react-native-firebase/auth";
+
 import { firebase } from "@react-native-firebase/firestore";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Question from "./Question";
@@ -26,10 +26,6 @@ function Home({ navigation }) {
   useEffect(() => {
     getUser();
   }, []);
-
-  const logout = () => {
-    firebase.auth().signOut();
-  };
 
   return (
     <SafeArea>

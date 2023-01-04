@@ -75,10 +75,9 @@ export default function App() {
           <Stack.Screen
             name="AddFamily"
             component={AddFamily}
-            options={{
-              title: "가족 구성원 연결",
-            }}
+            options={AppStyle.AddFamily}
           />
+          
           <Stack.Screen
             name="FindingIDPW"
             component={FindingIDPW}
@@ -125,4 +124,8 @@ const AppStyle = StyleSheet.create({
     title: "정보 입력",
     ...header,
   },
+  AddFamily : {
+    title : "가족 구성원 추가",
+    ...header
+  }
 });

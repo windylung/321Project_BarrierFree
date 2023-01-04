@@ -65,10 +65,21 @@ const DrawerTabs = () => {
           },
         }}
       />
-      <Drawer.Screen name="가족 추가" component={AddFamily} />
+      <Drawer.Screen name="가족 추가" component={AddFamily} options={{
+        title: "가족 구성원 연결",
+        headerStyle: {
+          backgroundColor: COLOR_DEEPGREEN,
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}/>
       <Drawer.Screen name="로그아웃" component={Logout} />
       <Drawer.Screen name="회원탈퇴" component={AddFamily} />
     </Drawer.Navigator>
   );
 };
+
+
 export default DrawerTabs;
