@@ -27,6 +27,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = fv321Project/main.m; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-fv321Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fv321Project.debug.xcconfig"; path = "Target Support Files/Pods-fv321Project/Pods-fv321Project.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-fv321Project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fv321Project.release.xcconfig"; path = "Target Support Files/Pods-fv321Project/Pods-fv321Project.release.xcconfig"; sourceTree = "<group>"; };
+		903075902964876300B0F0A0 /* fv321Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = fv321Project.entitlements; path = fv321Project/fv321Project.entitlements; sourceTree = "<group>"; };
 		9086A3F4295D7FAB0097AFCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = fv321Project/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
@@ -50,6 +51,7 @@
 		13B07FAE1A68108700A75B9A /* fv321Project */ = {
 			isa = PBXGroup;
 			children = (
+				903075902964876300B0F0A0 /* fv321Project.entitlements */,
 				9086A3F4295D7FAB0097AFCA /* GoogleService-Info.plist */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -170,6 +172,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 22YYY3U8AQ;
 						LastSwiftMigration = 1250;
 					};
 				};
@@ -353,7 +356,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = fv321Project/fv321Project.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 22YYY3U8AQ;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -368,7 +373,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.fv321Project;
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.project321;
 				PRODUCT_NAME = fv321Project;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -382,7 +387,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = fv321Project/fv321Project.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 22YYY3U8AQ;
 				INFOPLIST_FILE = fv321Project/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -392,7 +399,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.fv321Project;
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.project321;
 				PRODUCT_NAME = fv321Project;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -70,7 +70,8 @@ const InformationInput = ({navigation}) => {
 
   const addUserCollection = firestore().collection("User_Client");
   const addUser = async () => {
-    if (name === "" || role === -1 || sex === "") {
+    if (name === "" || role === -1 || sex === "")
+    {
       return Alert.alert("정보를 선택해주세요");
     }
 
@@ -96,7 +97,7 @@ const InformationInput = ({navigation}) => {
       setFamilyID(0);
       setRole(-1);
       console.log("Create Complete!");
-      navigation.navigate("Home")
+      navigation.navigate("DrawerTabs")
     } catch (error) {
       console.log(error.message);
     }
@@ -196,7 +197,7 @@ const InformationInput = ({navigation}) => {
         
 
 
-        <TouchableOpacity onPress={addUser} style ={[Loginstyle.okaybutton, Loginstyle.centeralign]}>
+        <TouchableOpacity onPress={() => addUser()} style ={[Loginstyle.okaybutton, Loginstyle.centeralign]}>
           <Text style={Loginstyle.btnText}>완료</Text>
         </TouchableOpacity>
       </View>

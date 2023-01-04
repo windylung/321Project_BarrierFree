@@ -15,6 +15,46 @@ import { COLOR_DEEPGREEN, COLOR_GREEN, COLOR_GREY } from "../Color";
 import { useEffect, useState } from "react";
 import Clipboard from "@react-native-clipboard/clipboard";
 import styled from "styled-components";
+import { List } from "react-native-paper";
+
+export function FamilyList(query) {
+  const [docs, setDocs] = useState([]);
+
+  // Store current query in ref
+  const queryRef = useRef(query);
+
+  // Compare current query with the previous one
+  useEffect(() => {
+    // Use Firestore built-in 'isEqual' method
+    // to compare queries
+    if (!queryRef?.current?.isEqual(query)) {
+      queryRef.current = query;
+    }
+  });
+
+  // Re-run data listener only if query has changed
+  useEffect(() => {
+    if (!queryRef.current) {
+      return null;
+    }
+
+    // Subscribe to query with onSnapshot
+    const unsubscribe = queryRef.current.onSnapshot((querySnapshot) => {
+      // Get all documents from collection - with IDs
+      const data = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // Update state
+      setDocs(data);
+    });
+
+    // Detach listener
+    return unsubscribe;
+  }, [queryRef]);
+
+  return docs;
+}
 
 export const AddFamily = () => {
   const user = firebase.auth().currentUser;
@@ -79,7 +119,8 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
-
+  
+  const [familyList, setFamilyList] = useState([]);
   const createFamily = async (doc) => {
     try {
       await FamilyCollection.add({
@@ -152,62 +193,60 @@ export const AddFamily = () => {
     }
   };
 
-  const renderItem = (item) => {
+  const renderItem = ({ item }) => {
     return (
       <View>
         <Text>{item}</Text>
       </View>
     );
   };
-
   useEffect(() => {
     UserClientCollection.doc(user.uid)
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          //   setName(doc.data().userName);
-          setUserID(doc.id);
-          setFamilyID(doc.data().familyID);
-          setInvitationID(doc.data().invitationID);
-          //   setRole(doc.data().role);
-          //   setSex(doc.data().sex);
-        } else {
-          console.log("No such document!");
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        // setName(doc.data().userName);
+        setUserID(doc.id);
+        setFamilyID(doc.data().familyID);
+        setInvitationID(doc.data().invitationID);
+        //   setRole(doc.data().role);
+        //   setSex(doc.data().sex);
+        return familyID;
+      } else {
+        console.log("No such document!");
         }
+      })
+      .then((fid) => {
+        FamilyCollection.doc(fid)
+        .get()
+        .then(function (doc) {
+          doc.data().family_member.forEach(feach);
+        }).catch((e) => console.log(e));
       })
       .catch(function (error) {
         console.log("Error getting document:", error);
       });
-  }, []);
-
-  useEffect(() => {
-    FamilyCollection.doc(familyID)
-      .get()
-      .then((doc) => {
-        DATA = doc.data().family_member
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  //   useEffect(() => {
-  //     try {
-  //       FamilyCollection.doc(familyID)
-  //         .get()
-  //         .then(function (doc) {
-  //           // if (doc.exists){
-  //           //     setRenderingData(doc.data().family_member);
-  //           // }
-  //           console.log(doc.data().family_member);
-  //         });
-  //     } catch {
-  //       (error) => {
-  //         console.log(error);
-  //       };
-  //     }
-  //   }, []);
-
-  return (
-    <SafeArea>
+      const feach = (element, index, array) => {
+        console.log(element)
+        if (element !== userID) {
+          UserClientCollection.doc(element)
+            .get()
+            .then((doc) => {
+              console.log(doc.data().userName);
+              console.log(familyList);
+        
+                // setFamilyList({familyList, ...doc.data().userName})
+                setFamilyList({...doc.data().userName})
+          
+              console.log("familyList : ",familyList)
+            }).catch((e) => console.log(e))
+    
+          }
+        };
+    }, []);
+    
+    return (
+      <SafeArea>
       <View style={{ padding: 30, flex: 0.8 }}>
         <View
           style={{
@@ -286,7 +325,6 @@ export const AddFamily = () => {
         />
         <View style={{ alignItems: "center", flex: 5, marginVertical: 10 }}>
           <TouchableOpacity
-            onPress={onSubmitinputFamilyIDEditing}
             style={{
               backgroundColor: COLOR_GREEN,
               padding: 10,
@@ -302,14 +340,16 @@ export const AddFamily = () => {
               연결된 가족 목록
             </Text>
           </TouchableOpacity>
-          {/* <FlatList
-            data={DATA}
+          <FlatList
+            data={familyList}
             renderItem={renderItem}
             keyExtractor={(item) => String(item.id)}
-          /> */}
+          />
           <Text>이지수 이유정 화동이</Text>
         </View>
       </View>
     </SafeArea>
   );
 };
+
+
