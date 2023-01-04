@@ -16,23 +16,13 @@ import InformationModify from "./src/Screens/InformationModify";
 import { AddFamily } from "./src/Screens/AddFamily";
 import { COLOR_DEEPGREEN, COLOR_GREEN } from "./src/Color";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import BottomTabs from "./src/Screens/BottomTabs";
 import { FindingIDPW } from "./src/Screens/FindingIDPW";
 import { SocialLogin } from "./src/Screens/SocialLogin";
 import { StyleSheet } from "react-native";
 import DrawerTabs from "./src/Screens/DrawerTabs";
 
 const Stack = createNativeStackNavigator();
-// function Root() {
-//   return (
-//     <Drawer.Navigator>
-//       <Drawer.Screen name="Home" component={Home} />
-//       <Drawer.Screen name="Profile" component={Profile} />
-//       <Stack.Screen name="Settings" component={Settings} />
-//     </Drawer.Navigator>
-//   );
-// }
+
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -60,12 +50,11 @@ export default function App() {
               options={AppStyle.Login}
             />
           ) : (
-              <Stack.Screen
-                name="DrawerTabs"
-                component={DrawerTabs}
-                options={{headerShown: false }}
-              />
-  
+            <Stack.Screen
+              name="DrawerTabs"
+              component={DrawerTabs}
+              options={{ headerShown: false }}
+            />
           )}
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Question" component={Question} />
@@ -73,10 +62,15 @@ export default function App() {
           <Stack.Screen name="QuestionList" component={QuestionList} />
           <Stack.Screen name="AnswerList" component={AnswerList} />
           <Stack.Screen name="MettingMain" component={MettingMain} />
-          <Stack.Screen name="InformationInput" component={InformationInput} />
+          <Stack.Screen
+            name="InformationInput"
+            component={InformationInput}
+            options={AppStyle.InformationInput}
+          />
           <Stack.Screen
             name="InformationModify"
             component={InformationModify}
+            options={AppStyle.InformationModify}
           />
           <Stack.Screen
             name="AddFamily"
@@ -121,6 +115,14 @@ const AppStyle = StyleSheet.create({
   },
   SocialLogin: {
     title: "소셜 연동",
+    ...header,
+  },
+  InformationModify: {
+    title: "정보 수정",
+    ...header,
+  },
+  InformationInput: {
+    title: "정보 입력",
     ...header,
   },
 });

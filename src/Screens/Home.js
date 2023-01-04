@@ -11,9 +11,9 @@ import {
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/firestore";
-import InformationInput from "./InformationInput";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Question from "./Question";
+import { SafeArea } from "./StyleComponent";
 const Tab = createBottomTabNavigator();
 
 function Home({ navigation }) {
@@ -32,61 +32,49 @@ function Home({ navigation }) {
   };
 
   return (
-    <View style={mainStyle.background}>
-      <TouchableOpacity onPress={logout}>
-        <Text>로그아웃</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("InformationModify")}
-      >
-        <Text>회원정보수정</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("AddFamily")}>
-        <Text>가족 추가/연결</Text>
-      </TouchableOpacity>
-
-      <View style={{ flex: 0.7 }}>
+    <SafeArea>
+      <View style={{ flex: 1, justifyContent: "flex-end"}}>
         <Image
           source={require("../MainCharacter-removebg-preview.png")}
-          style={{ resizeMode: "cover", width: "100%", height: "100%" }}
+          style={{ resizeMode: "cover", width: "100%", height: "90%" }}
         ></Image>
       </View>
+    </SafeArea>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          flex: 0.2,
-          paddingHorizontal: "5%",
-        }}
-      >
-        <TouchableOpacity
-          style={[mainStyle.btn, mainStyle.touchable]}
-          onPress={() =>
-            navigation.navigate("QuestionList", { IsAnswer: { answer } })
-          }
-        >
-          <Text style={mainStyle.btnText}>문답</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[mainStyle.btn, mainStyle.touchable]}
-          onPress={() => navigation.navigate("MettingMain")}
-        >
-          <Text style={mainStyle.btnText}>가족회의</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[mainStyle.btn, mainStyle.touchable]}
-          onPress={() => navigation.navigate("Question")}
-        >
-          <Text style={mainStyle.btnText}>정보제공</Text>
-        </TouchableOpacity>
-      </View>
-      {/* <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Settings" component={Question} />
-      </Tab.Navigator> */}
-    </View>
+      // <View
+      //   style={{
+      //     flexDirection: "row",
+      //     justifyContent: "center",
+      //     flex: 0.2,
+      //     paddingHorizontal: "5%",
+      //   }}
+      // >
+      //   <TouchableOpacity
+      //     style={[mainStyle.btn, mainStyle.touchable]}
+      //     onPress={() =>
+      //       navigation.navigate("QuestionList", { IsAnswer: { answer } })
+      //     }
+      //   >
+      //     <Text style={mainStyle.btnText}>문답</Text>
+      //   </TouchableOpacity>
+      //   <TouchableOpacity
+      //     style={[mainStyle.btn, mainStyle.touchable]}
+      //     onPress={() => navigation.navigate("MettingMain")}
+      //   >
+      //     <Text style={mainStyle.btnText}>가족회의</Text>
+      //   </TouchableOpacity>
+      //   <TouchableOpacity
+      //     style={[mainStyle.btn, mainStyle.touchable]}
+      //     onPress={() => navigation.navigate("Question")}
+      //   >
+      //     <Text style={mainStyle.btnText}>정보제공</Text>
+      //   </TouchableOpacity>
+      // </View>
+      // <Tab.Navigator>
+      //   <Tab.Screen name="Home" component={Home} />
+      //   <Tab.Screen name="Settings" component={Question} />
+      // </Tab.Navigator> 
+    
   );
 }
 

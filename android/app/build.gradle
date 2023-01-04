@@ -276,6 +276,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.facebook.fresco:fresco:1.+'
+    implementation 'com.facebook.fresco:animated-gif:1.+'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
 

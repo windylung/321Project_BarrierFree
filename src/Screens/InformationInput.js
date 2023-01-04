@@ -70,7 +70,8 @@ const InformationInput = ({navigation}) => {
 
   const addUserCollection = firestore().collection("User_Client");
   const addUser = async () => {
-    if (name === "" || role === -1 || sex === "") {
+    if (name === "" || role === -1 || sex === "")
+    {
       return Alert.alert("정보를 선택해주세요");
     }
 

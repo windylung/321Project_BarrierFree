@@ -5,9 +5,23 @@ import {
 } from "@invertase/react-native-apple-authentication";
 import { View } from "react-native";
 import { SafeArea } from "./StyleComponent";
+import { useState } from "react";
 
 export const SocialLogin = () => {
-  
+  const [isLoadingEnd, setIsLoadingEnd] = useState(false);
+  const checkLoggedIn = () => {
+    auth().onAuthStateChanged((user) => {
+        if (user) {
+            setLoggedIn(true)
+            console.log("loggedIn")
+        } else {
+            setLoggedIn(false)
+            console.log("loggedOut")
+        }
+    }
+    )
+}
+console.log(isLoadingEnd)
   async function onAppleButtonPress() {
     // Start the sign-in request
     const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -27,7 +41,6 @@ export const SocialLogin = () => {
       nonce
     );
 
-    
     // Sign the user in with the credential
     return auth().signInWithCredential(appleCredential);
   }
@@ -44,7 +57,8 @@ export const SocialLogin = () => {
           }}
           onPress={() =>
             onAppleButtonPress()
-              .then(() => console.log("Apple sign-in complete!"))
+              .then(() => {console.log("Apple sign-in complete!")}
+              )
               .catch((error) => console.log(error))
           }
         />
