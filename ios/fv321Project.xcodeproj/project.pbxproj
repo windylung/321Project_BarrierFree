@@ -373,7 +373,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fv321project;
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.project321;
 				PRODUCT_NAME = fv321Project;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -399,7 +399,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fv321project;
+				PRODUCT_BUNDLE_IDENTIFIER = org.name.project321;
 				PRODUCT_NAME = fv321Project;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
