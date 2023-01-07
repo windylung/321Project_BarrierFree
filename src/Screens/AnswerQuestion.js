@@ -91,11 +91,11 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
         <Text style={{ fontWeight: "500", fontSize: 30 }}>
           {month} . {date}
         </Text>
-        <Text>{question}</Text>
+        <Text style={{fontSize: 17}}>{question}</Text>
       </View>
       {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
       <View style={styles.answerView}>
-        <Text>(나)의 답변</Text>
+        <Text style={{fontSize: 15, fontWeight: "700"}}>   나의 답변{"\n"}</Text>
         <TextInput
           multiline
           placeholder="답변을 입력해주세요"

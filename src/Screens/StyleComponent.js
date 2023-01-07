@@ -7,6 +7,7 @@ export const ButtonContainer = styled.TouchableOpacity`
   padding: 10px 30px;
   margin: 10px 0px;
   justify-content: center;
+  align-items: center
 `;
 export const SafeArea = styled.SafeAreaView`
   flex: 1;

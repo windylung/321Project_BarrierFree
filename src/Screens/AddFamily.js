@@ -16,45 +16,7 @@ import { useEffect, useState } from "react";
 import Clipboard from "@react-native-clipboard/clipboard";
 import styled from "styled-components";
 import { List } from "react-native-paper";
-
-export function FamilyList(query) {
-  const [docs, setDocs] = useState([]);
-
-  // Store current query in ref
-  const queryRef = useRef(query);
-
-  // Compare current query with the previous one
-  useEffect(() => {
-    // Use Firestore built-in 'isEqual' method
-    // to compare queries
-    if (!queryRef?.current?.isEqual(query)) {
-      queryRef.current = query;
-    }
-  });
-
-  // Re-run data listener only if query has changed
-  useEffect(() => {
-    if (!queryRef.current) {
-      return null;
-    }
-
-    // Subscribe to query with onSnapshot
-    const unsubscribe = queryRef.current.onSnapshot((querySnapshot) => {
-      // Get all documents from collection - with IDs
-      const data = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      // Update state
-      setDocs(data);
-    });
-
-    // Detach listener
-    return unsubscribe;
-  }, [queryRef]);
-
-  return docs;
-}
+import { UserClientCollection } from "./firebase";
 
 export const AddFamily = () => {
   const user = firebase.auth().currentUser;
@@ -105,7 +67,6 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
-
   //user를 doc의 family에 추가
   const addUserToFamily = async (doc) => {
     try {
@@ -119,8 +80,6 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
-  
-  const [familyList, setFamilyList] = useState([]);
   const createFamily = async (doc) => {
     try {
       await FamilyCollection.add({
@@ -135,7 +94,6 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
-
   const createAnswerTable = async (id) => {
     try {
       await AnswerCollection.doc(id).set({
@@ -147,7 +105,6 @@ export const AddFamily = () => {
       console.log(error.message);
     }
   };
-
   const onSubmitinputFamilyIDEditing = () => {
     if (inputfamilyID === invitationID) {
       return Alert.alert("자신의 코드와 동일합니다 다시 입력해주세요");
@@ -193,60 +150,59 @@ export const AddFamily = () => {
     }
   };
 
-  const renderItem = ({ item }) => {
+  const [familyList, setFamilyList] = useState([]);
+
+  useEffect(() => {
+    const getMemberList = async () => {
+      await UserClientCollection.doc(user.uid)
+        .get()
+        .then((doc) => {
+          setInvitationID(doc.data().invitationID)
+          FamilyCollection.doc(doc.data().familyID)
+            .get()
+            .then((members) => {
+              // setFamilyList(members.data().family_member);
+              members.data().family_member.forEach((m) => {
+                UserClientCollection.doc(m)
+                  .get()
+                  .then((n) => {
+                    console.log(n.data().userName);
+                    familyList.push(n.data().userName);
+                    console.log(familyList);
+                  });
+              });
+            })
+            .catch((e) => console.log(e));
+        })
+        .catch((e) => console.log(e));
+    };
+
+    getMemberList();
+  }, []);
+
+  const renderItem = async ({ item }) => {
+    const name = await UserClientCollection.doc(item).get();
+    console.log(String(name.data().userName));
     return (
       <View>
-        <Text>{item}</Text>
+        <Text>hello</Text>
       </View>
     );
   };
-  useEffect(() => {
-    UserClientCollection.doc(user.uid)
-    .get()
-    .then(function (doc) {
-      if (doc.exists) {
-        // setName(doc.data().userName);
-        setUserID(doc.id);
-        setFamilyID(doc.data().familyID);
-        setInvitationID(doc.data().invitationID);
-        //   setRole(doc.data().role);
-        //   setSex(doc.data().sex);
-        return familyID;
-      } else {
-        console.log("No such document!");
-        }
-      })
-      .then((fid) => {
-        FamilyCollection.doc(fid)
-        .get()
-        .then(function (doc) {
-          doc.data().family_member.forEach(feach);
-        }).catch((e) => console.log(e));
-      })
-      .catch(function (error) {
-        console.log("Error getting document:", error);
-      });
-      const feach = (element, index, array) => {
-        console.log(element)
-        if (element !== userID) {
-          UserClientCollection.doc(element)
-            .get()
-            .then((doc) => {
-              console.log(doc.data().userName);
-              console.log(familyList);
-        
-                // setFamilyList({familyList, ...doc.data().userName})
-                setFamilyList({...doc.data().userName})
-          
-              console.log("familyList : ",familyList)
-            }).catch((e) => console.log(e))
-    
-          }
-        };
-    }, []);
-    
+  const  FamilyListMapping =  () => {
     return (
-      <SafeArea>
+      familyList.map((comp) => (
+        <Text>{comp}</Text>
+      ))
+    )
+  }
+
+  // {familyList.map((comp) => (
+  //   <Text>{comp}</Text>
+  // ))}
+  console.log(familyID)
+  return (
+    <SafeArea>
       <View style={{ padding: 30, flex: 0.8 }}>
         <View
           style={{
@@ -256,7 +212,7 @@ export const AddFamily = () => {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontWeight: "bold" }}>나의 코드</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 15 }}>나의 코드</Text>
           <View
             style={{
               flexDirection: "row",
@@ -264,7 +220,7 @@ export const AddFamily = () => {
               alignItems: "center",
             }}
           >
-            <Text> {invitationID}</Text>
+            <Text style={{fontSize: 14}}> {invitationID}</Text>
             <TouchableOpacity
               style={{ marginHorizontal: 5 }}
               onPress={copyToClipboard}
@@ -283,7 +239,7 @@ export const AddFamily = () => {
         <View
           style={{ alignItems: "center", flex: 3, justifyContent: "center" }}
         >
-          <Text>가족으로 연결할 상대방의 코드를 입력해주세요!</Text>
+          <Text  style={{fontSize: 16}} >가족의 초대 코드를 입력해주세요!</Text>
           {/* <Text>가 족 코드{getUserInformation("inputfamilyID")}</Text> */}
           <View style={{ flexDirection: "row" }}>
             <TextInput
@@ -340,16 +296,20 @@ export const AddFamily = () => {
               연결된 가족 목록
             </Text>
           </TouchableOpacity>
-          <FlatList
-            data={familyList}
-            renderItem={renderItem}
-            keyExtractor={(item) => String(item.id)}
-          />
-          <Text>이지수 이유정 화동이</Text>
+          <View style={{flex: 1, width: "100%", alignItems: "center"}}>
+            {familyList.map((comp) => (
+              <TouchableOpacity style={{backgroundColor: "white", width: '80%', height: 40, marginVertical: 4, alignItems: "center", justifyContent: "center", borderRadius: 20}}>
+
+                <Text style={{fontSize: 15}}>{comp}</Text>
+              </TouchableOpacity>
+              
+            ))}
+          </View>
+          <View>
+          </View>
         </View>
       </View>
     </SafeArea>
   );
 };
-
 
