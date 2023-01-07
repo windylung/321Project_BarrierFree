@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -15,15 +15,6 @@ import {
   Keyboard,
 } from "react-native";
 import { COLOR_BG } from "../Color";
-import firestore from "@react-native-firebase/firestore";
-import { firebase } from "@react-native-firebase/auth";
-import {
-  AnswerCollection,
-  QuestionCollection,
-  user,
-  UserClientCollection,
-} from "./firebase";
-import { ButtonContainer } from "./StyleComponent";
 
 const AnswerQuestion = ({ navigation: { navigate } }) => {
   //오늘의 질문, 답변 입력
@@ -31,52 +22,7 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
-  const [name, setName] = useState("");
-  const [userID, setUserID] = useState("");
-  const [familyID, setFamilyID] = useState("");
-  const [question, setQuestion] = useState("");
   const inputAccessoryViewID = "uniqueID";
-  const user = firebase.auth().currentUser;
-
-  // AnswerCollection.doc()
-
-  useEffect(() => {
-      UserClientCollection.doc(user.uid)
-        .get()
-        .then(function (doc) {
-          if (doc.exists) {
-            setName(doc.data().userName);
-            setUserID(doc.id);
-            setFamilyID(doc.data().familyID);
-          } else {
-            console.log("No such document!");
-          }
-        })
-        .catch(function (error) {
-          console.log("Error getting document:", error);
-        });
-
-      AnswerCollection.doc(familyID)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            console.log(doc.data().currentIndex);
-            return doc.data().currentIndex;
-          }
-        })
-        .then((idx) => {
-          QuestionCollection.doc(String(0))
-            .get()
-            .then((q) => {
-              setQuestion(q.data().Question);
-            })
-            .catch((error) => console.log(error));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  }, []);
-
   return (
     //오늘의 질문
     <View style={{ padding: 30, backgroundColor: COLOR_BG, flex: 1 }}>
@@ -91,7 +37,7 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
         <Text style={{ fontWeight: "500", fontSize: 30 }}>
           {month} . {date}
         </Text>
-        <Text>{question}</Text>
+        <Text>상담을 시작한 목적이 무엇인가요?</Text>
       </View>
       {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
       <View style={styles.answerView}>
@@ -103,12 +49,18 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
           value={text}
           onChangeText={(payload) => setText(payload)}
           inputAccessoryViewID={inputAccessoryViewID}
-          returnKeyType={"done"}
+          // returnKeyType={'done'}
           // onSubmitEditting={() => navigate("AnswerList")}
         ></TextInput>
-        <ButtonContainer>
-          <Text>완료</Text>
-        </ButtonContainer>
+        <InputAccessoryView nativeID={inputAccessoryViewID}>
+          <View style={{flexDirection: "row-reverse"}}>
+            <Button
+              // onPress={() => navigate("AnswerList", { inputText: { text } })}
+              onPress={() => {Keyboard.dismiss(); navigate("AnswerList", { inputText: { text } })}}
+              title="Done"
+            />
+          </View>
+        </InputAccessoryView>
       </View>
     </View>
   );

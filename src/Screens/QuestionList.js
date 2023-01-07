@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { COLOR_BG, COLOR_GREEN } from "../Color";
 import { styles } from "./AnswerQuestion";
-import { SafeArea } from "./StyleComponent";
 
 // const navigation = useNavigation();
 // const goScreen = ({navigation : {navigate}, route}) => {
@@ -21,12 +20,13 @@ import { SafeArea } from "./StyleComponent";
 //   navigate("AnswerQuestionTwo")
 // }
 
+
 function QuestionList({ navigation, route }) {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(
     route.params.IsAnswer.answer
   );
-
+  
   //질문 목록을 불러오는 함수 => 이후 DB에서 가져오도록 수정 필요
   const getData = () => {
     setData([
@@ -132,12 +132,15 @@ function QuestionList({ navigation, route }) {
   useEffect(() => {
     getData();
   }, []);
-
+  
+  
+  
   //render되는 화면
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <View style={{ alignItems: "center", backgroundColor: COLOR_BG }}>
         <View style={{ flexDirection: "row", width: 360, height: 45 }}>
+          
           <TouchableOpacity
             style={{
               flexDirection: "row",
@@ -170,9 +173,9 @@ function QuestionList({ navigation, route }) {
       </View>
     );
   };
-
+  
   return (
-    <SafeArea>
+    <SafeAreaView style={{ padding: 30, backgroundColor: COLOR_BG }}>
       <Modal
         animationType="slide"
         transparent={true}
@@ -229,7 +232,7 @@ function QuestionList({ navigation, route }) {
       >
         <Text style={{ fontSize: 24 }}>답변 목록</Text>
       </View>
-
+      
       <View>
         <FlatList
           data={data}
@@ -238,10 +241,8 @@ function QuestionList({ navigation, route }) {
           // onEndReachedThreshold = {10}
         ></FlatList>
       </View>
-      {modalVisible ? (
-        <BlurView style={styles.absolute} blurType="dark" blurAmount={4} />
-      ) : null}
-    </SafeArea>
+      {modalVisible ? <BlurView style={styles.absolute} blurType="dark" blurAmount={4} /> : null}
+    </SafeAreaView>
   );
 }
 
