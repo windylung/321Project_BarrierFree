@@ -15,7 +15,6 @@ import {
   Keyboard,
 } from "react-native";
 import { COLOR_BG } from "../Color";
-import firestore from "@react-native-firebase/firestore";
 import { firebase } from "@react-native-firebase/auth";
 import {
   AnswerCollection,
@@ -25,11 +24,17 @@ import {
   UserClientCollection,
 } from "./firebase";
 import { ButtonContainer } from "./StyleComponent";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "@react-native-firebase/firestore";
 
 const AnswerQuestion = ({ navigation: { navigate } }) => {
   //오늘의 질문, 답변 입력
   const today = new Date();
-  const yesterday = new Date(today)
+  const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   const month = today.getMonth() + 1;
   const date = today.getDate();
@@ -45,76 +50,108 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
   // AnswerCollection.doc()
 
   useEffect(() => {
-      UserClientCollection.doc(user.uid)
-        .get()
-        .then(function (doc) {
-          if (doc.exists) {
-            setName(doc.data().userName);
-            setUserID(doc.id);
-            setFamilyID(doc.data().familyID);
-          } else {
-            console.log("No such document!");
-          }
-        })
-        .catch(function (error) {
-          console.log("Error getting document:", error);
-        });
+    UserClientCollection.doc(user.uid)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          setName(doc.data().userName);
+          setUserID(doc.id);
+          setFamilyID(doc.data().familyID);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(function (error) {
+        console.log("Error getting document:", error);
+      });
 
-      AnswerCollection.doc(familyID)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            console.log(doc.data().currentIndex);
-            return doc.data().currentIndex;
-          }
-        })
-        .then((idx) => {
-          QuestionCollection.doc(String(questionKey))
-            .get()
-            .then((q) => {
-              setQuestion(q.data().Question);
-            })
-            .catch((error) => console.log(error));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        
+    AnswerCollection.doc(familyID)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log(doc.data().currentIndex);
+          return doc.data().currentIndex;
+        }
+      })
+      .then((idx) => {
+        QuestionCollection.doc(String(questionKey))
+          .get()
+          .then((q) => {
+            setQuestion(q.data().Question);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   //최근 답변 일자 수정
   const onSubmitUserTable = async () => {
     await UserClientCollection.doc(user.uid).update({
-      currentAnswer : today.toDateString()
+      currentAnswer: today.toDateString(),
     });
-  }
+  };
 
-  const [answer, setAnswer] = useState({});
+  const [takenAnswer, setAnswer] = useState({});
 
   //Family table에서 자신의 답변 저장
-  const onSubmitToFamilyTable = async () => {
-    // await AnswerCollection.doc(familyID).update({
-    //   answer : answer[questionKey] = [[userID, text]]
-    //   // answer : [userID, text]
-    // })
-    await AnswerCollection.doc(familyID).get().then(
-      (doc) => {
-        setAnswer(doc.data().answer)
-        console.log(doc.data().answer)
+  const onSubmitToQuestionTable = async () => {
+    
+    UserClientCollection.doc(userID).update(
+      {
+        answer : firebase.firestore.FieldValue.arrayUnion(
+          {
+            questionKey : questionKey,
+            text : text
+          }
+        )
       }
-      ).catch((e) => console.log(e))
-      
-    if (answer[questionKey] === undefined){
-      console.log("here");
-      // answer[questionKey] = {userID: text};
-      // answer[questionKey][0] = [userID, text]
-    }
+    )
+
+    // const dbuser = FamilyCollection.get();
+    // (await dbuser).forEach((user) => console.log(user.data()));
+
+    // await AnswerCollection.doc(familyID)
+    //   .update()
+    //   .then((doc) => {
+    //     setAnswer(doc.data().answer);
+    //     console.log("overhere===>", doc.data().answer);
+
+    //     doc.data().answer[0] = firebase.firestore.FieldValue.arrayUnion(
+    //       {
+    //         keys : 2
+    //       }
+    //     )
+        
+    //   })
+    //   .catch((e) => console.log(e));
+
+
+    // if (takenAnswer[questionKey] === undefined) {
+    //   setAnswer((takenAnswer[questionKey] = [userID, text]));
+    // } else {
+    //   var newArr = new Array(takenAnswer[questionKey]);
+    //   newArr.push([userID,text])
+    //   takenAnswer[questionKey] = newArr
+    //   setAnswer(takenAnswer)
+    //   setAnswer(takenAnswer[questionKey].push([userID, text]));
+    //   console.log("->", Object.keys(takenAnswer[questionKey]))
+    //   console.log("->", takenAnswer[questionKey]["0"])
+    //   takenAnswer[questionKey]
+    // }
 
     await AnswerCollection.doc(familyID).update({
-      answer : answer
-    })
-  
-  }
+
+      answer: firebase.firestore.FieldValue.arrayRemove({
+        key: questionKey,
+        answerList: {
+          id: userID,
+          text: text,
+        },
+      }),
+    });
+  };
 
   return (
     //오늘의 질문
@@ -130,11 +167,14 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
         <Text style={{ fontWeight: "500", fontSize: 30 }}>
           {month} . {date}
         </Text>
-        <Text style={{fontSize: 17}}>{question}</Text>
+        <Text style={{ fontSize: 17 }}>{question}</Text>
       </View>
       {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
       <View style={styles.answerView}>
-        <Text style={{fontSize: 15, fontWeight: "700"}}>   나의 답변{"\n"}</Text>
+        <Text style={{ fontSize: 15, fontWeight: "700" }}>
+          {" "}
+          나의 답변{"\n"}
+        </Text>
         <TextInput
           multiline
           placeholder="답변을 입력해주세요"
@@ -143,21 +183,17 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
           onChangeText={(payload) => setText(payload)}
           inputAccessoryViewID={inputAccessoryViewID}
           returnKeyType={"done"}
-          onSubmitEditting={() => 
-            {
-              ////개인 currentAnswer
-              
-              
-            }}
+          onSubmitEditting={() => {
+            ////개인 currentAnswer
+          }}
         ></TextInput>
         <TouchableOpacity
-        onPress={ () => {
-          onSubmitUserTable();
-          onSubmitToFamilyTable();
-          navigate("AnswerList")
-        }
-
-        }>
+          onPress={() => {
+            onSubmitUserTable();
+            onSubmitToQuestionTable();
+            navigate("AnswerList");
+          }}
+        >
           <Text>완료</Text>
         </TouchableOpacity>
       </View>

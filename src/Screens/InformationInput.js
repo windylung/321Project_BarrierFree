@@ -94,7 +94,8 @@ const InformationInput = ({navigation}) => {
         invitationID: user.uid,
         role: role,
         sex: sex,
-        currentAnswer : yesterday.toDateString()
+        currentAnswer : yesterday.toDateString(),
+        answer : {}
       });
 
       setName("");

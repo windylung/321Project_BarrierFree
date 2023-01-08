@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { COLOR_BG } from "../Color";
 import { styles } from "./AnswerQuestion";
+import { UserClientCollection } from "./firebase";
+import { firebase } from "@react-native-firebase/auth";
 
 function AnswerList({ navigation: { navigate }, route }) {
   //오늘의 질문, 답변 입력
@@ -19,9 +21,25 @@ function AnswerList({ navigation: { navigate }, route }) {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
+  const user = firebase.auth().currentUser;
+  // useEffect(() => {
+  //   route.params === undefined ? null : setText(route.params.inputText.text);
+  // });
+
   useEffect(() => {
-    route.params === undefined ? null : setText(route.params.inputText.text);
-  });
+    UserClientCollection.doc(user.uid).get().then(
+      (doc) => {
+        doc.data().answer.forEach(element => {
+          console.log(element)
+          if (element.questionKey === 1){
+            setText(element.text)
+          }
+        });
+        // console.log(doc.data().answer[0])
+      }
+    )
+  }, [])
+
 
   return (
     //오늘의 질문
@@ -43,13 +61,15 @@ function AnswerList({ navigation: { navigate }, route }) {
         {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
         <View style={styles.answerView}>
           <Text>(나)의 답변</Text>
+          <Text>{text}</Text>
           <View>
             <TouchableOpacity onPress={() => navigate("AnswerQuestion")}>
-              {text === "" ? (
+              {/* {text === "" ? (
                 <Text style={{ color: "grey" }}>답변을 작성해주세요</Text>
               ) : (
                 <Text style={styles.answerViewText}>{text}</Text>
-              )}
+              )} */}
+              
             </TouchableOpacity>
           </View>
         </View>
