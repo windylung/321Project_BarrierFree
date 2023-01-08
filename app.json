@@ -1,18 +1,11 @@
 {
   "expo": {
-    "name": "fv_321Project",
-    "slug": "fv_321Project",
+    "name": "321Project_v3",
+    "slug": "321Project_v3",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "android": {
-      "googleServicesFile": "./google-services.json"
-    },
-    "ios": {
-      "googleServicesFile": "./GoogleService-Info.plist"
-    },
-    "plugins": ["@react-native-google-signin/google-signin"]
+    ]
   },
-  "name": "fv_321Project"
+  "name": "321Project_v3"
 }

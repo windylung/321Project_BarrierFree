@@ -29,12 +29,18 @@ function AnswerList({ navigation: { navigate }, route }) {
   useEffect(() => {
     UserClientCollection.doc(user.uid).get().then(
       (doc) => {
-        doc.data().answer.forEach(element => {
+        doc.data().answer.some(element => {
           console.log(element)
-          if (element.questionKey === 1){
+          // array.includes(1)
+          if (doc.data().answer.questionKey.inclues(questionKey)) {
             setText(element.text)
           }
         });
+
+        //
+
+        /*
+        */
         // console.log(doc.data().answer[0])
       }
     )
