@@ -65,7 +65,10 @@ const InformationInput = ({navigation}) => {
 
   const [role, setRole] = useState(-1);
   const [sex, setSex] = useState("");
-
+  const today = new Date();
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1);
+  const currentAnswer = [today.getMonth() + 1, today.getDate() - 1];
   const [checked, setChecked] = React.useState('부모');
 
   const addUserCollection = firestore().collection("User_Client");
@@ -90,7 +93,8 @@ const InformationInput = ({navigation}) => {
         //invitatonID는 이후 함수 만들어서 수정예정
         invitationID: user.uid,
         role: role,
-        sex: sex
+        sex: sex,
+        currentAnswer : yesterday.toDateString()
       });
 
       setName("");

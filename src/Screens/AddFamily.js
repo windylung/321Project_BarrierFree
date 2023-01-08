@@ -97,7 +97,7 @@ export const AddFamily = () => {
   const createAnswerTable = async (id) => {
     try {
       await AnswerCollection.doc(id).set({
-        answer: [],
+        answer: {},
         currentIndex: 0,
       });
       console.log("Create Complete!!");
@@ -157,6 +157,7 @@ export const AddFamily = () => {
       await UserClientCollection.doc(user.uid)
         .get()
         .then((doc) => {
+          setUserID(doc.id)
           setInvitationID(doc.data().invitationID)
           FamilyCollection.doc(doc.data().familyID)
             .get()

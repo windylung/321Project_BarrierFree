@@ -19,6 +19,7 @@ import firestore from "@react-native-firebase/firestore";
 import { firebase } from "@react-native-firebase/auth";
 import {
   AnswerCollection,
+  FamilyCollection,
   QuestionCollection,
   user,
   UserClientCollection,
@@ -28,6 +29,8 @@ import { ButtonContainer } from "./StyleComponent";
 const AnswerQuestion = ({ navigation: { navigate } }) => {
   //오늘의 질문, 답변 입력
   const today = new Date();
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1);
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const [text, setText] = useState("");
@@ -35,6 +38,7 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
   const [userID, setUserID] = useState("");
   const [familyID, setFamilyID] = useState("");
   const [question, setQuestion] = useState("");
+  const [questionKey, setQuestionKey] = useState(0);
   const inputAccessoryViewID = "uniqueID";
   const user = firebase.auth().currentUser;
 
@@ -65,7 +69,7 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
           }
         })
         .then((idx) => {
-          QuestionCollection.doc(String(0))
+          QuestionCollection.doc(String(questionKey))
             .get()
             .then((q) => {
               setQuestion(q.data().Question);
@@ -75,7 +79,42 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
         .catch((error) => {
           console.log(error);
         });
+        
   }, []);
+
+  //최근 답변 일자 수정
+  const onSubmitUserTable = async () => {
+    await UserClientCollection.doc(user.uid).update({
+      currentAnswer : today.toDateString()
+    });
+  }
+
+  const [answer, setAnswer] = useState({});
+
+  //Family table에서 자신의 답변 저장
+  const onSubmitToFamilyTable = async () => {
+    // await AnswerCollection.doc(familyID).update({
+    //   answer : answer[questionKey] = [[userID, text]]
+    //   // answer : [userID, text]
+    // })
+    await AnswerCollection.doc(familyID).get().then(
+      (doc) => {
+        setAnswer(doc.data().answer)
+        console.log(doc.data().answer)
+      }
+      ).catch((e) => console.log(e))
+      
+    if (answer[questionKey] === undefined){
+      console.log("here");
+      // answer[questionKey] = {userID: text};
+      // answer[questionKey][0] = [userID, text]
+    }
+
+    await AnswerCollection.doc(familyID).update({
+      answer : answer
+    })
+  
+  }
 
   return (
     //오늘의 질문
@@ -104,11 +143,23 @@ const AnswerQuestion = ({ navigation: { navigate } }) => {
           onChangeText={(payload) => setText(payload)}
           inputAccessoryViewID={inputAccessoryViewID}
           returnKeyType={"done"}
-          // onSubmitEditting={() => navigate("AnswerList")}
+          onSubmitEditting={() => 
+            {
+              ////개인 currentAnswer
+              
+              
+            }}
         ></TextInput>
-        <ButtonContainer>
+        <TouchableOpacity
+        onPress={ () => {
+          onSubmitUserTable();
+          onSubmitToFamilyTable();
+          navigate("AnswerList")
+        }
+
+        }>
           <Text>완료</Text>
-        </ButtonContainer>
+        </TouchableOpacity>
       </View>
     </View>
   );

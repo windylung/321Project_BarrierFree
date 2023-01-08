@@ -33,6 +33,7 @@ function Home({ navigation }) {
   };
 
   
+  
   return (
     <SafeArea>
       <View style={{ flex: 1, justifyContent: "flex-end"}}>

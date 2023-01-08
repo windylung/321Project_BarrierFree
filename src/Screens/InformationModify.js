@@ -86,6 +86,7 @@ const InformationModify = ({ navigation }) => {
         userName: name,
         familyID: familyID,
         //invitatonID는 이후 함수 만들어서 수정예정
+
         invitationID: user.uid,
         role: role,
         sex: sex,
