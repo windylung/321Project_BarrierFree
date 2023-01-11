@@ -1,68 +1,172 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Pressable,
   TextInput,
   StyleSheet,
-  Modal,
-  Image,
   TouchableOpacity,
-  InputAccessoryView,
-  Button,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
-import { COLOR_BG } from "../Color";
+import { COLOR_BG, COLOR_DEEPGREEN } from "../Color";
+import firestore from "@react-native-firebase/firestore";
+import { firebase } from "@react-native-firebase/auth";
+import {
+  AnswerCollection,
+  FamilyCollection,
+  QuestionCollection,
+  user,
+  UserClientCollection,
+} from "./firebase";
+import { ButtonContainer, SafeArea } from "./StyleComponent";
 
-const AnswerQuestion = ({ navigation: { navigate } }) => {
+export const AnswerQuestion= ({ navigation }) => {
   //오늘의 질문, 답변 입력
-  const today = new Date();
-  const month = today.getMonth() + 1;
-  const date = today.getDate();
+
   const [text, setText] = useState("");
+  const [name, setName] = useState("");
+  const [userID, setUserID] = useState("");
+  const [familyID, setFamilyID] = useState("");
+  const [question, setQuestion] = useState("");
+  const [questionKey, setQuestionKey] = useState(0);
   const inputAccessoryViewID = "uniqueID";
+  const [existedAnswer, setExistedAnswer] = useState("");
+
+  const getInform = async () => {
+    try {
+      await UserClientCollection.doc(user.uid)
+        .get()
+        .then(function (doc) {
+          if (doc.exists) {
+            setName(doc.data().userName);
+            setUserID(doc.id);
+            setFamilyID(doc.data().familyID);
+            doc.data().answer.forEach((answer) => {
+              if (answer.questionKey === questionKey) {
+                setText(answer.text);
+                setExistedAnswer(answer.text);
+              }
+            });
+          } else {
+            console.log("No such document!");
+          }
+        });
+    } catch {
+      console.log("error!");
+    }
+  };
+
+  const getQuestionIndex = async () => {
+    try {
+      await FamilyCollection.doc(familyID)
+        .get()
+        .then((doc) => {
+          setQuestionKey(doc.data().index);
+        });
+    } catch {
+      console.log("error!");
+    }
+  };
+
+  const getQuestion = async () => {
+    try {
+      await QuestionCollection.doc(String(questionKey))
+        .get()
+        .then((doc) => {
+          setQuestion(doc.data().Question);
+        });
+    } catch {
+      console.log("error!");
+    }
+  };
+
+  useEffect(() => {
+    getInform();
+  }, []);
+
+  useEffect(() => {
+    getQuestion();
+  }, []);
+
+  useEffect(() => {
+    getQuestionIndex();
+  }, []);
+
+
+  const onSubmitAnswer = async () => {
+    await UserClientCollection.doc(user.uid).update({
+      answer: firebase.firestore.FieldValue.arrayRemove({
+        questionKey: questionKey,
+        text: existedAnswer,
+      }),
+    });
+
+    await UserClientCollection.doc(user.uid).update({
+      answer: firebase.firestore.FieldValue.arrayUnion({
+        questionKey: questionKey,
+        text: text,
+      }),
+    });
+
+    setExistedAnswer(text);
+  };
+
   return (
     //오늘의 질문
-    <View style={{ padding: 30, backgroundColor: COLOR_BG, flex: 1 }}>
-      <Text style={{ color: "grey" }}>#오늘의 질문</Text>
-      <View
-        style={{
-          height: 177,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ fontWeight: "500", fontSize: 30 }}>
-          {month} . {date}
-        </Text>
-        <Text>상담을 시작한 목적이 무엇인가요?</Text>
+    <SafeArea>
+      <View style={{ padding: 20, backgroundColor: COLOR_BG, flex: 1 }}>
+        
+        <View
+          style={{
+            height: 177,
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 0.3,
+          }}
+        >
+          <Text style={{ fontWeight: "500", fontSize: 30 }}>
+            {questionKey}
+          </Text>
+          <Text style={{ fontSize: 17 }}>{question}</Text>
+        </View>
+        {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
+        <View style={{ flex: 0.7, }}>
+          <Text style={{ fontSize: 15, fontWeight: "700" }}>
+            {" "}
+            나의 답변{"\n"}
+          </Text>
+          <TextInput
+            multiline
+            placeholder="답변을 입력해주세요"
+            style={[styles.input, { flex: 0.9 }]}
+            value={text}
+            onChangeText={(payload) => setText(payload)}
+            inputAccessoryViewID={inputAccessoryViewID}
+            returnKeyType={"done"}
+            onSubmitEditting={() => {
+              ////개인 currentAnswer
+            }}
+          ></TextInput>
+          <TouchableOpacity
+            style={{
+              backgroundColor: COLOR_DEEPGREEN,
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "80%",
+              borderRadius: 20,
+              marginTop: 20,
+              // paddingVertical: "3%",
+              flex: 0.1,
+            }}
+            onPress={() => {
+              onSubmitAnswer();
+              navigation.goBack();
+            }}
+          >
+            <Text>완료</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
-      <View style={styles.answerView}>
-        <Text>(나)의 답변</Text>
-        <TextInput
-          multiline
-          placeholder="답변을 입력해주세요"
-          style={styles.input}
-          value={text}
-          onChangeText={(payload) => setText(payload)}
-          inputAccessoryViewID={inputAccessoryViewID}
-          // returnKeyType={'done'}
-          // onSubmitEditting={() => navigate("AnswerList")}
-        ></TextInput>
-        <InputAccessoryView nativeID={inputAccessoryViewID}>
-          <View style={{flexDirection: "row-reverse"}}>
-            <Button
-              // onPress={() => navigate("AnswerList", { inputText: { text } })}
-              onPress={() => {Keyboard.dismiss(); navigate("AnswerList", { inputText: { text } })}}
-              title="Done"
-            />
-          </View>
-        </InputAccessoryView>
-      </View>
-    </View>
+    </SafeArea>
   );
 };
 
@@ -131,4 +235,3 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default AnswerQuestion;

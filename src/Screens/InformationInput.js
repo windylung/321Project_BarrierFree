@@ -6,152 +6,208 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { COLOR_GREEN } from "../Color";
+import { COLOR_BG, COLOR_GREEN } from "../Color";
 import { mainStyle } from "./Home";
 import firestore from "@react-native-firebase/firestore";
 import { firebase } from "@react-native-firebase/auth";
-import styled from 'styled-components/native'
+import { ButtonContainer, SafeArea } from "./StyleComponent";
+import { Alert } from "react-native";
+import { Loginstyle } from "./Login";
+import * as React from 'react';
+import { CheckBox } from 'react-native-elements';
 
-const ButtonContainer = styled.TouchableOpacity`
-    background-color: ${COLOR_GREEN};
-    border-radius: 15px;
-    padding: 15px 40px;
-    margin: 10px 0px;
-    justify-content: center;
-`;
 
-const InformationInput = () => {
+//해당 페이지에 사용되는 모든 버튼 style component
+
+
+const InformationInput = ({navigation}) => {
   const user = firebase.auth().currentUser;
   const [name, setName] = useState("");
   const [familyID, setFamilyID] = useState(0);
+
+  const [Parents, setParents] = useState(false);
+  const [Children, setChildren] = useState(false);
+
+  const [Male, setMale] = useState(false);
+  const [Female, setFemale] = useState(false);
+  const [Other, setOther] = useState(false);
+
+  const rolePartents = () => {
+    setParents(true);
+    setChildren(false);
+    setRole("Parents");
+  }
+
+  const roleChildren = () => {
+    setParents(false);
+    setChildren(true);
+    setRole("Children");
+  }
+
+  const genderMale = () => {
+    setMale(true);
+    setFemale(false);
+    setOther(false);
+    setSex("Male");
+  }
+  const genderFemale = () => {
+    setMale(false);
+    setFemale(true);
+    setOther(false);
+    setSex("Female");
+  }
+  const genderOther = () => {
+    setMale(false);
+    setFemale(false);
+    setOther(true);
+    setSex("Other");
+  }
+
   const [role, setRole] = useState(-1);
   const [sex, setSex] = useState("");
+  const today = new Date();
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1);
+  const currentAnswer = [today.getMonth() + 1, today.getDate() - 1];
+  const [checked, setChecked] = React.useState('부모');
 
-  const addCollection = firestore().collection("Users");
-  const userDocument = firestore().collection("Users");
-  console.log(userDocument);
+  const addUserCollection = firestore().collection("User_Client");
   const addUser = async () => {
+    if (name === "" || role === -1 || sex === "")
+    {
+      return Alert.alert("정보를 선택해주세요");
+    }
+
     try {
-      await addCollection.add({
-        id: user.uid,
+      // await addUserCollection.add({
+      //   id: user.uid,
+      //   userName: name,
+      //   familyID: familyID,
+      //   //invitatonID는 이후 함수 만들어서 수정예정
+      //   invitationID: user.uid,
+      //   role: role,
+      // });
+      await addUserCollection.doc(user.uid).set({
         userName: name,
         familyID: familyID,
         //invitatonID는 이후 함수 만들어서 수정예정
         invitationID: user.uid,
         role: role,
+        sex: sex,
+        currentAnswer : yesterday.toDateString()
       });
+
       setName("");
       setFamilyID(0);
       setRole(-1);
       console.log("Create Complete!");
+      navigation.navigate("DrawerTabs")
     } catch (error) {
       console.log(error.message);
     }
+
   };
+
   return (
-    <SafeAreaView style={mainStyle.background}>
-      <Text>회원정보</Text>
+    <SafeArea>
+      <View style={mainStyle.background}>
+        
 
-      <Text>이름</Text>
-      <TextInput
-        placeholder="Username"
-        returnKeyType="next"
-        value={name}
-        onChangeText={(name) => setName(name)}
-        // ref={passwordInput}
-        // onSubmitEditing={onSubmitPasswordEditing}
-      ></TextInput>
-      <Text>가족 ID가 있나요?</Text>
-      <TextInput
-        placeholder="family id"
-        returnKeyType="next"
-        value={familyID}
-        //유효한지 확인하는 과정도 필요함
-        onChangeText={(ID) => setFamilyID(ID)}
-        // ref={passwordInput}
-        // onSubmitEditing={onSubmitPasswordEditing}
-      ></TextInput>
+        <View style={{flex : 0.4}}>
+          <Text style={{ fontSize: 24, textAlign: "center",   marginTop: 100}}>회원정보를 입력해주세요</Text>
+        </View>
 
-      <Text> 내 아이디는 None</Text>
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLOR_GREEN,
-            width: 80,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 10,
-          }}
-          onPress={() => setRole("부모")}
-        >
-          <Text>부모</Text>
-        </TouchableOpacity>
-        <ButtonContainer>
-          <Text>Test</Text>
-        </ButtonContainer>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLOR_GREEN,
-            width: 80,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 10,
-          }}
-          onPress={() => setRole("아동")}
-        >
-          <Text>아동</Text>
+
+        <View style={Loginstyle.rowalign}>
+        
+          <View style={{    alignItems: 'flex-end', flex : 0.9}}>
+            <Text style={Loginstyle.text}>이름 : </Text>
+            
+            <Text style={Loginstyle.text}>가족 내 역할 : </Text>
+
+            <Text style={Loginstyle.text}>성별 : </Text>
+          </View>
+
+          <View>
+            <TextInput
+              placeholder="Username"
+              returnKeyType="next"
+              value={name}
+              onChangeText={(name) => setName(name)}
+              // ref={passwordInput}
+              // onSubmitEditing={onSubmitPasswordEditing}
+            ></TextInput>
+
+            <View style={{ flexDirection: "row" ,  alignContent : "center", justifyContent : "center"}}>
+              <CheckBox
+              title="부모"
+              checked={Parents}
+              onPress={rolePartents}
+              center
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />
+
+              <CheckBox
+              title="자녀"
+              center
+              checked={Children}
+              onPress={roleChildren}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />       
+            </View> 
+
+            <View style={{ flexDirection: "row" ,  alignContent : "center", justifyContent : "center"}}>
+              <CheckBox
+              title="남자"
+              checked={Male}
+              onPress={genderMale}
+              center
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />
+
+              <CheckBox
+              title="여자"
+              center
+              checked={Female}
+              onPress={genderFemale}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3, marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              /> 
+
+              <CheckBox
+              title="기타"
+              center
+              checked={Other}
+              onPress={genderOther}
+              checkedColor={COLOR_GREEN}
+              containerStyle={{ backgroundColor : COLOR_BG, borderColor: COLOR_BG, padding : 0, marginVertical : 3 , marginHorizontal : 0}}
+              textStyle={{fontSize : 14}}
+              size={14} 
+              />           
+            </View> 
+          </View>
+        </View>
+        
+
+
+        <TouchableOpacity onPress={() => addUser()} style ={[Loginstyle.okaybutton, Loginstyle.centeralign]}>
+          <Text style={Loginstyle.btnText}>완료</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={{ flexDirection: "row" }}>
-        <Text>성별</Text>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLOR_GREEN,
-            width: 80,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => setRole("부모")}
-        >
-          <Text>남</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLOR_GREEN,
-            width: 80,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => setRole("아동")}
-        >
-          <Text>여</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            backgroundColor: COLOR_GREEN,
-            width: 80,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => setRole("부모")}
-        >
-          <Text>기타</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={{ backgroundColor: COLOR_GREEN, width: 88, height: 48, borderRadius: 100, alignItems: "center", justifyContent: "center"}}
-        onPress={addUser}
-      >
-        <Text>완료</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    </SafeArea>
   );
 };
+
 
 export default InformationInput;
