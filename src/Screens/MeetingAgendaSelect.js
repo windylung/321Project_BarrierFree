@@ -26,15 +26,15 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
   // 체크 박스를 체크 하였을 때
   const onPressInCheckbox = (item) => {
     // 해당 체크 박스가 기존에 선택되지 않았다면 => selected Agenda 배열에 추가
-      const newArr = selectedAgenda;
-      newArr.push(item)
-      setSelectedAgenda(newArr)
+    const newArr = selectedAgenda;
+    newArr.push(item);
+    setSelectedAgenda(newArr);
   };
 
-  // 체크 박스를 체크 해지 하였을 때 
+  // 체크 박스를 체크 해지 하였을 때
   const onPressOutCheckbox = async (item) => {
-    const newArr = selectedAgenda.filter((e) => e.id !== item.id)
-    setSelectedAgenda(newArr)
+    const newArr = selectedAgenda.filter((e) => e.id !== item.id);
+    setSelectedAgenda(newArr);
   };
 
   const getRecommendAgenda = () => {
@@ -91,7 +91,6 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
         fillColor={COLOR_GREEN}
         unfillColor="#FFFFFF"
         text={item.agenda}
-        
         onPress={(isChecked) => {
           isChecked === true
             ? onPressInCheckbox(item)
@@ -173,7 +172,20 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
         </View>
         <View style={{ flex: 0.1, justifyContent: "flex-end", padding: 30 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("MettingDuring", {familyID: familyID, startTime: Date(), selectedAgenda: selectedAgenda})}
+            onPress={() =>
+              navigation.reset({
+                routes: [
+                  {
+                    name: "MettingDuring",
+                    params: {
+                      familyID: familyID,
+                      startTime: Date(),
+                      selectedAgenda: selectedAgenda,
+                    },
+                  },
+                ],
+              })
+            }
             style={[
               mainStyle.touchable,
               {
@@ -186,7 +198,6 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
             ]}
           >
             <Text style={{ fontSize: 18, fontWeight: "500" }}>다음</Text>
-
           </TouchableOpacity>
         </View>
       </View>
