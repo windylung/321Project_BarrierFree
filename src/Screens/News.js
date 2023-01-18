@@ -8,11 +8,11 @@ export const News = () => {
   return (
     <SafeArea>
       <View style={{flex: 1}}>
-        {/* <FastImage
+        <FastImage
           style={{ width: "100%", height: "100%" }}
           source={require("../Image/walkingDuck.gif")}
           resizeMode={FastImage.resizeMode.cover}
-        ></FastImage> */}
+        ></FastImage>
       </View>
     </SafeArea>
   );

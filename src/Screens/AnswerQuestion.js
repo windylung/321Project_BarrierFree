@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { COLOR_BG, COLOR_DEEPGREEN } from "../Color";
 import firestore from "@react-native-firebase/firestore";
@@ -17,8 +18,9 @@ import {
   UserClientCollection,
 } from "./firebase";
 import { ButtonContainer, SafeArea } from "./StyleComponent";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export const AnswerQuestion= ({ navigation }) => {
+export const AnswerQuestion = ({ navigation }) => {
   //오늘의 질문, 답변 입력
 
   const [text, setText] = useState("");
@@ -90,7 +92,6 @@ export const AnswerQuestion= ({ navigation }) => {
     getQuestionIndex();
   }, []);
 
-
   const onSubmitAnswer = async () => {
     await UserClientCollection.doc(user.uid).update({
       answer: firebase.firestore.FieldValue.arrayRemove({
@@ -112,8 +113,7 @@ export const AnswerQuestion= ({ navigation }) => {
   return (
     //오늘의 질문
     <SafeArea>
-      <View style={{ padding: 20, backgroundColor: COLOR_BG, flex: 1 }}>
-        
+      <View style={{ padding: 30, backgroundColor: COLOR_BG, flex: 1 }}>
         <View
           style={{
             height: 177,
@@ -122,48 +122,45 @@ export const AnswerQuestion= ({ navigation }) => {
             flex: 0.3,
           }}
         >
-          <Text style={{ fontWeight: "500", fontSize: 30 }}>
-            {questionKey}
-          </Text>
+          <Text style={{ fontWeight: "500", fontSize: 30 }}>{questionKey}</Text>
           <Text style={{ fontSize: 17 }}>{question}</Text>
         </View>
-        {/* 현재는 모든 구성원으로 나왔지만, DB에서는 id마다 날짜, 질문 내용, 나의 답변, ...이렇게 해야 하지 않을까  */}
-        <View style={{ flex: 0.7, }}>
+
+        <View style={{ flex: 0.7 }}>
           <Text style={{ fontSize: 15, fontWeight: "700" }}>
-            {" "}
             나의 답변{"\n"}
           </Text>
+
           <TextInput
             multiline
             placeholder="답변을 입력해주세요"
-            style={[styles.input, { flex: 0.9 }]}
+            style={[styles.input]}
             value={text}
             onChangeText={(payload) => setText(payload)}
             inputAccessoryViewID={inputAccessoryViewID}
             returnKeyType={"done"}
-            onSubmitEditting={() => {
-              ////개인 currentAnswer
-            }}
+            onSubmitEditing={onSubmitAnswer}
           ></TextInput>
-          <TouchableOpacity
-            style={{
-              backgroundColor: COLOR_DEEPGREEN,
-              alignSelf: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "80%",
-              borderRadius: 20,
-              marginTop: 20,
-              // paddingVertical: "3%",
-              flex: 0.1,
-            }}
-            onPress={() => {
-              onSubmitAnswer();
-              navigation.goBack();
-            }}
-          >
-            <Text>완료</Text>
-          </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                backgroundColor: COLOR_DEEPGREEN,
+                alignSelf: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "80%",
+                borderRadius: 20,
+                marginTop: 20,
+                // paddingVertical: "3%",
+                flex: 0.1,
+              }}
+              onPress={() => {
+                onSubmitAnswer();
+                navigation.goBack();
+              }}
+            >
+              <Text>완료</Text>
+            </TouchableOpacity>
         </View>
       </View>
     </SafeArea>
@@ -234,4 +231,3 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
-

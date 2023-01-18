@@ -6,7 +6,7 @@ import Home from "./src/Screens/Home";
 import Question from "./src/Screens/Question";
 import QuestionList from "./src/Screens/QuestionList";
 
-import MettingMain from "./src/Screens/MettingMain";
+import MettingMain from "./src/Screens/MeetingMain";
 import { Login } from "./src/Screens/Login";
 import InformationInput from "./src/Screens/InformationInput";
 import { SignUp } from "./src/Screens/SignUp";
@@ -23,10 +23,14 @@ import { AnswerList2 } from "./src/Screens/AnswerList2";
 import { AnswerQuestion } from "./src/Screens/AnswerQuestion";
 import AnswerQuestionToday from "./src/Screens/AnswerQuestionToday";
 import AnswerListToday from "./src/Screens/AnswerListToday";
-
+import { MeetingAgenda } from "./src/Screens/MeetingAgenda";
+import AccountWithdrawal from "./src/Screens/AccountWithdrawal";
+import { MeetingFamilyConnect } from "./src/Screens/MeetingFamilyConnect";
+import { MettingDuring } from "./src/Screens/MettingDuring";
+import MeetingHistory from "./src/Screens/MeetingHistory";
+import { MeetingAgendaSelect } from "./src/Screens/MeetingAgendaSelect";
 
 const Stack = createNativeStackNavigator();
-
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -60,9 +64,14 @@ export default function App() {
               options={{ headerShown: false }}
             />
           )}
+          <Stack.Screen
+            name="FirstLogin"
+            component={Login}
+            options={AppStyle.Login}
+          />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="Question" component={Question} />
-          <Stack.Screen name="AnswerQuestion" component={AnswerQuestion}/>
+          <Stack.Screen name="AnswerQuestion" component={AnswerQuestion} />
           <Stack.Screen name="QuestionList" component={QuestionList} />
           <Stack.Screen name="AnswerListToday" component={AnswerListToday} />
           <Stack.Screen name="MettingMain" component={MettingMain} />
@@ -81,7 +90,7 @@ export default function App() {
             component={AddFamily}
             options={AppStyle.AddFamily}
           />
-          
+
           <Stack.Screen
             name="FindingIDPW"
             component={FindingIDPW}
@@ -99,11 +108,44 @@ export default function App() {
           />
 
           <Stack.Screen
-          name = "AnswerQuestionToday"
-          component={AnswerQuestionToday}
-          // options={AppStyle.AnswerQuestion}
+            name="AnswerQuestionToday"
+            component={AnswerQuestionToday}
+            // options={AppStyle.AnswerQuestion}
+          />
+
+          <Stack.Screen
+            name="MeetingAgenda"
+            component={MeetingAgenda}
+            options={AppStyle.MeetingAgenda}
+          />
+          <Stack.Screen
+            name="MeetingFamilyConnect"
+            component={MeetingFamilyConnect}
+            options={AppStyle.MeetingFamilyConnect}
+          />
+          <Stack.Screen
+            name="MettingDuring"
+            component={MettingDuring}
+            options={AppStyle.MeetingDuring}
+          />
+          <Stack.Screen
+            name="MeetingHistory"
+            component={MeetingHistory}
+            options={AppStyle.MeetingHistory}
+          />
+          <Stack.Screen
+            name="MeetingAgendaSelect"
+            component={MeetingAgendaSelect}
+            options={AppStyle.MeetingAgendaSelect}
+          />
+          
+          <Stack.Screen
+            name="AccountWithdrawal"
+            component={AccountWithdrawal}
           />
         </Stack.Navigator>
+        
+        
       }
     </NavigationContainer>
   );
@@ -139,16 +181,36 @@ const AppStyle = StyleSheet.create({
     title: "정보 입력",
     ...header,
   },
-  AddFamily : {
-    title : "가족 구성원 추가",
-    ...header
+  AddFamily: {
+    title: "가족 구성원 추가",
+    ...header,
   },
-  AnswerList : {
-    title : "가족 답변",
-    ...header
+  AnswerList: {
+    title: "가족 답변",
+    ...header,
   },
-  AnswerQuestion :{
-    title : "답변 작성",
-    ...header
-  }
+  AnswerQuestion: {
+    title: "답변 작성",
+    ...header,
+  },
+  MeetingAgenda: {
+    title: "나의 안건",
+    ...header,
+  },
+  MeetingHistory: {
+    title: "가족회의 돌아보기",
+    ...header,
+  },
+  MeetingFamilyConnect: {
+    title: "연결된 가족",
+    ...header,
+  },
+  MeetingAgendaSelect: {
+    title: "안건 선택",
+    ...header,
+  },
+  MeetingDuring: {
+    title: "가족회의",
+    ...header,
+  },
 });

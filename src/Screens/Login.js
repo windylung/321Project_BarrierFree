@@ -28,7 +28,6 @@ export const Login = ({ navigation, route }) => {
   };
   const onSubmitPasswordEditing = async () => {
     console.log("login");
-    console.log("here")
     if (email === "" || password === "") {
       return Alert.alert("아이디와 비밀번호를 입력해주세요");
     }
@@ -40,7 +39,9 @@ export const Login = ({ navigation, route }) => {
         email,
         password
       );
+        navigation.reset({routes: {name: "DrawerTabs"}})
     } catch (e) {
+      console.log(e)
       Alert.alert("아이디/비밀번호가 일치하지 않습니다");
     }
   };

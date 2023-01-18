@@ -17,7 +17,7 @@ import { styles } from "./AnswerQuestionToday";
 import { mainStyle } from "./Home";
 import { SafeArea } from "./StyleComponent";
 
-function MettingMain({ navigation }) {
+function MeetingMain({ navigation }) {
   return (
     //오늘의 질문
     <SafeArea>
@@ -48,7 +48,7 @@ function MettingMain({ navigation }) {
               marginVertical: 10,
             }}
 
-            onPress = {() => navigation.navigate("MettingAgenda")}
+            onPress = {() => navigation.navigate("MeetingAgenda")}
           >
             <Text style={{ fontSize: 17 }}>안건 작성하기</Text>
             <Text style={{ fontSize: 14, color: "grey" }}>
@@ -65,6 +65,7 @@ function MettingMain({ navigation }) {
               padding: 30,
               marginVertical: 10,
             }}
+            onPress={() => navigation.navigate("MeetingHistory")}
           >
             <Text style={{ fontSize: 17 }}>이전 회의 돌아보기</Text>
             <Text style={{ fontSize: 14, color: "grey" }}>
@@ -73,6 +74,7 @@ function MettingMain({ navigation }) {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate("MeetingFamilyConnect")}
           style={[
             mainStyle.touchable,
             {
@@ -99,8 +101,5 @@ function MettingMain({ navigation }) {
   );
 }
 
-const MettingBtn = styled.TouchableOpacity`
-  align-
-`;
 
-export default MettingMain;
+export default MeetingMain;

@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import auth, { firebase } from "@react-native-firebase/auth";
 import Home from "./Home";
-import MettingMain from "./MettingMain";
+import MettingMain from "./MeetingMain";
 import { StackActions } from "@react-navigation/native";
 import Question from "./Question";
 import BottomTabs from "./BottomTabs";
@@ -10,31 +10,8 @@ import InformationModify from "./InformationModify";
 import { COLOR_DEEPGREEN, COLOR_GREEN } from "../Color";
 import { Alert } from "react-native";
 import { useEffect } from "react";
-
-const Logout = ({ navigation: { goBack } }) => {
-console.log("hi");
-
-         Alert.alert(
-             "로그아웃 하시겠습니까?",
-             "",
-             [
-                 {
-                     text: "네",
-                     onPress: () => {
-                         firebase.auth().signOut();
-                        },
-                    },
-                    {
-                        text: "아니요",
-                        onPress: () => {
-                            goBack();
-                        }
-                    },
-                ],
-                { cancelable: false }
-                )
-    
-};
+import AccountWithdrawal from "./AccountWithdrawal";
+import { Logout } from "./Logout";
 
 const DrawerTabs = () => {
   const Drawer = createDrawerNavigator();
@@ -76,7 +53,7 @@ const DrawerTabs = () => {
         },
       }}/>
       <Drawer.Screen name="로그아웃" component={Logout} />
-      <Drawer.Screen name="회원탈퇴" component={AddFamily} />
+      <Drawer.Screen name="회원탈퇴" component={AccountWithdrawal} />
     </Drawer.Navigator>
   );
 };

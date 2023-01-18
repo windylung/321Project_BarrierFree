@@ -1,6 +1,6 @@
 import Question from "./Question";
 import Home from "./Home";
-import MettingMain from "./MettingMain";
+import MeetingMain from "./MeetingMain";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import AnswerQuestion from "./AnswerQuestionToday";
@@ -15,8 +15,9 @@ const BottomTabs = () => {
         <Tab.Navigator initialRouteName="Home">
           <Tab.Screen name="문답" component={QuestionList}  options={BottomTabsStyle.QuestionList}/>
           <Tab.Screen name="Home" component={Home} options={BottomTabsStyle.Home}/>
-          <Tab.Screen name="가족회의" component={MettingMain}  options={BottomTabsStyle.MettingMain}/>
-          <Tab.Screen name="정보제공" component={News} options={BottomTabsStyle.News} />
+          <Tab.Screen name="가족회의" component={MeetingMain}  options={BottomTabsStyle.MeetingMain}/>
+          
+          {/* <Tab.Screen name="정보제공" component={News} options={BottomTabsStyle.News} /> */}
         </Tab.Navigator>
     );  
 };
@@ -39,7 +40,7 @@ const BottomTabsStyle = StyleSheet.create({
     title: "문답",
     ...header
   },
-  MettingMain : {
+  MeetingMain : {
     title: "가족회의",
     ...header
   },

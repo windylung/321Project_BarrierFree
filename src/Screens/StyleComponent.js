@@ -13,3 +13,5 @@ export const SafeArea = styled.SafeAreaView`
   flex: 1;
   backgroundColor: ${COLOR_BG}
 `;
+
+

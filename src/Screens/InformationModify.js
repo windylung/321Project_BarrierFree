@@ -96,6 +96,7 @@ const InformationModify = ({ navigation }) => {
       setFamilyID(0);
       setRole(-1);
       console.log("Create Complete!");
+      Alert.alert("회원정보가 정상적으로 수정되었습니다.")
       navigation.navigate("Home");
     } catch (error) {
       console.log(error.message);
@@ -349,7 +350,7 @@ const InformationModify = ({ navigation }) => {
               alignSelf: "center",
             }}
             onPress={() => {
-              onSubmitPasswordEditing();
+              updateUser();
             }}
           >
             <Text style={[Loginstyle.btnText, { fontWeight: "500" }]}>
