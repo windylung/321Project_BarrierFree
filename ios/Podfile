@@ -9,8 +9,8 @@ platform :ios, podfile_properties['ios.deploymentTarget'] || '13.0'
 install! 'cocoapods',
   :deterministic_uuids => false
 
-# target 'fv_321Project' do
-target '오리함께' do
+# target 'fv321Project' do
+target '오리함께' do
   use_expo_modules!
   use_frameworks! :linkage => :static
   config = use_native_modules!

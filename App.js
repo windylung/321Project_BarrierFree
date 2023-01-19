@@ -26,7 +26,7 @@ import AnswerListToday from "./src/Screens/AnswerListToday";
 import { MeetingAgenda } from "./src/Screens/MeetingAgenda";
 import AccountWithdrawal from "./src/Screens/AccountWithdrawal";
 import { MeetingFamilyConnect } from "./src/Screens/MeetingFamilyConnect";
-import { MettingDuring } from "./src/Screens/MettingDuring";
+import { MettingDuring } from "./src/Screens/MeetingDuring";
 import MeetingHistory from "./src/Screens/MeetingHistory";
 import { MeetingAgendaSelect } from "./src/Screens/MeetingAgendaSelect";
 

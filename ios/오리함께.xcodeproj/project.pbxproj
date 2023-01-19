@@ -11,28 +11,34 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		8107462A0B7EEAEE0F267D61 /* Pods__________.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 609A02DF15521D7B003DE3D1 /* Pods__________.framework */; };
+		55681722BC48278AD31EF0BE /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5F1C1872A9AF2B0D05F06D /* ExpoModulesProvider.swift */; };
+		8BE7582AD78B5B7D13FAB5FE /* Pods_____.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52A842E354DF992416DF9BF /* Pods_____.framework */; };
 		9077F00C2975D5E000666ADB /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		9077F00E2975D7BB00666ADB /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		9086A3F5295D7FAC0097AFCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9086A3F4295D7FAB0097AFCA /* GoogleService-Info.plist */; };
-		B8F2F1561C1291AC502CF726 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0557B510008AF8F8E9177474 /* ExpoModulesProvider.swift */; };
+		90B19B4E2978F2C1001E1458 /* Pods-오리함께.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EFD6A94E46EED9017D62FE2C /* Pods-오리함께.debug.xcconfig */; };
+		90B19B4F2978F2C4001E1458 /* Pods-오리함께.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 24822EC1A22346A5DC60AB0A /* Pods-오리함께.release.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		0557B510008AF8F8E9177474 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-오리함께/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		0ABA0C3D4E1C7D93955BAED2 /* Pods-오리함께.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-오리함께.release.xcconfig"; path = "Target Support Files/Pods-오리함께/Pods-오리함께.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* 오리함께.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "오리함께.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = fv321Project/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = fv321Project/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = fv321Project/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = fv321Project/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = fv321Project/main.m; sourceTree = "<group>"; };
+		1A482B73C0049EF1A0D82756 /* Pods-fv321Project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fv321Project.release.xcconfig"; path = "Target Support Files/Pods-fv321Project/Pods-fv321Project.release.xcconfig"; sourceTree = "<group>"; };
+		1E8A23D6FC480A8DBEF4C405 /* Pods-fv321Project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fv321Project.debug.xcconfig"; path = "Target Support Files/Pods-fv321Project/Pods-fv321Project.debug.xcconfig"; sourceTree = "<group>"; };
 		24822EC1A22346A5DC60AB0A /* Pods-오리함께.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-오리함께.release.xcconfig"; path = "Target Support Files/Pods-오리함께/Pods-오리함께.release.xcconfig"; sourceTree = "<group>"; };
-		609A02DF15521D7B003DE3D1 /* Pods__________.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods__________.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9086A3F4295D7FAB0097AFCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		90D596D6296B1F53005BAB8A /* fv321Project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = fv321Project.entitlements; path = fv321Project/fv321Project.entitlements; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = fv321Project/SplashScreen.storyboard; sourceTree = "<group>"; };
+		AE5F1C1872A9AF2B0D05F06D /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-오리함께/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		BAFD1E681F4C5C9E7CE0B04E /* Pods-오리함께.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-오리함께.debug.xcconfig"; path = "Target Support Files/Pods-오리함께/Pods-오리함께.debug.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		D52A842E354DF992416DF9BF /* Pods_____.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_____.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFD6A94E46EED9017D62FE2C /* Pods-오리함께.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-오리함께.debug.xcconfig"; path = "Target Support Files/Pods-오리함께/Pods-오리함께.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,7 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8107462A0B7EEAEE0F267D61 /* Pods__________.framework in Frameworks */,
+				8BE7582AD78B5B7D13FAB5FE /* Pods_____.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,12 +71,12 @@
 			name = fv321Project;
 			sourceTree = "<group>";
 		};
-		3ED6271E558AA231161C5227 /* 오리함께 */ = {
+		7352AC925C89D029C8FABBD0 /* 오리함께 */ = {
 			isa = PBXGroup;
 			children = (
-				0557B510008AF8F8E9177474 /* ExpoModulesProvider.swift */,
+				AE5F1C1872A9AF2B0D05F06D /* ExpoModulesProvider.swift */,
 			);
-			name = "오리함께";
+			name = "오리함께";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -106,7 +112,7 @@
 		8FB3CF1417A4473953DA82F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				609A02DF15521D7B003DE3D1 /* Pods__________.framework */,
+				D52A842E354DF992416DF9BF /* Pods_____.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,6 +131,10 @@
 			children = (
 				EFD6A94E46EED9017D62FE2C /* Pods-오리함께.debug.xcconfig */,
 				24822EC1A22346A5DC60AB0A /* Pods-오리함께.release.xcconfig */,
+				1E8A23D6FC480A8DBEF4C405 /* Pods-fv321Project.debug.xcconfig */,
+				1A482B73C0049EF1A0D82756 /* Pods-fv321Project.release.xcconfig */,
+				BAFD1E681F4C5C9E7CE0B04E /* Pods-오리함께.debug.xcconfig */,
+				0ABA0C3D4E1C7D93955BAED2 /* Pods-오리함께.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -132,7 +142,7 @@
 		D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				3ED6271E558AA231161C5227 /* 오리함께 */,
+				7352AC925C89D029C8FABBD0 /* 오리함께 */,
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
@@ -140,9 +150,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* 오리함께 */ = {
+		13B07F861A680F5B00A75B9A /* 오리함께 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "오리함께" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "오리함께" */;
 			buildPhases = (
 				43B317B40FF440DDB8AB9E64 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -157,7 +167,7 @@
 			);
 			dependencies = (
 			);
-			name = "오리함께";
+			name = "오리함께";
 			productName = fv321Project;
 			productReference = 13B07F961A680F5B00A75B9A /* 오리함께.app */;
 			productType = "com.apple.product-type.application";
@@ -189,7 +199,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* 오리함께 */,
+				13B07F861A680F5B00A75B9A /* 오리함께 */,
 			);
 		};
 /* End PBXProject section */
@@ -201,9 +211,11 @@
 			files = (
 				9077F00E2975D7BB00666ADB /* main.jsbundle in Resources */,
 				9077F00C2975D5E000666ADB /* Expo.plist in Resources */,
+				90B19B4F2978F2C4001E1458 /* Pods-오리함께.release.xcconfig in Resources */,
 				9086A3F5295D7FAC0097AFCA /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				90B19B4E2978F2C1001E1458 /* Pods-오리함께.debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +264,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-오리함께-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-오리함께-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -265,7 +277,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-오리함께/Pods-오리함께-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-오리함께/Pods-오리함께-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
@@ -280,7 +292,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-오리함께/Pods-오리함께-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-오리함께/Pods-오리함께-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -311,7 +323,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				B8F2F1561C1291AC502CF726 /* ExpoModulesProvider.swift in Sources */,
+				55681722BC48278AD31EF0BE /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +332,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFD6A94E46EED9017D62FE2C /* Pods-오리함께.debug.xcconfig */;
+			baseConfigurationReference = BAFD1E681F4C5C9E7CE0B04E /* Pods-오리함께.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -333,6 +345,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = fv321Project/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -351,7 +364,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 24822EC1A22346A5DC60AB0A /* Pods-오리함께.release.xcconfig */;
+			baseConfigurationReference = 0ABA0C3D4E1C7D93955BAED2 /* Pods-오리함께.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -359,6 +372,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 22YYY3U8AQ;
 				INFOPLIST_FILE = fv321Project/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				"INFOPLIST_KEY_CFBundleDisplayName[sdk=iphoneos*]" = "오리함께";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -486,7 +501,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "오리함께" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "오리함께" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
