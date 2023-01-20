@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { MeetingCollection, user, UserClientCollection } from "./firebase";
 import { useRoute } from "@react-navigation/native";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { dateFormat } from "./dateFormat";
 
 const MettingHistory = ({ route, navigation }) => {
@@ -25,6 +26,8 @@ const MettingHistory = ({ route, navigation }) => {
         setFamilyID(snapshot.data().familyID)
       );
 =======
+=======
+>>>>>>> 997c775 (fix. build error)
 
 
 const MettingHistory = ({ route, navigation }) => {
@@ -38,6 +41,9 @@ const MettingHistory = ({ route, navigation }) => {
         .onSnapshot((snapshot) => setFamilyID(snapshot.data().familyID))
 
       console.log(familyID)
+<<<<<<< HEAD
+>>>>>>> 997c775 (fix. build error)
+=======
 >>>>>>> 997c775 (fix. build error)
     } catch {
       (e) => {
