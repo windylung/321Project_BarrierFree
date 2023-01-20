@@ -6,6 +6,7 @@ import {
 import { View } from "react-native";
 import { SafeArea } from "./StyleComponent";
 import { useState } from "react";
+import { user } from "./firebase";
 
 export const SocialLogin = ({navigation}) => {
   const [isLoadingEnd, setIsLoadingEnd] = useState(false);
@@ -43,6 +44,7 @@ console.log(isLoadingEnd)
 
     // Sign the user in with the credential
     return auth().signInWithCredential(appleCredential);
+    
   }
 
   return (

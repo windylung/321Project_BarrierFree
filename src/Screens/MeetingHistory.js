@@ -4,20 +4,20 @@ import { SafeArea } from "./StyleComponent";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { useEffect, useState } from "react";
 import { MeetingCollection, user, UserClientCollection } from "./firebase";
+import { useRoute } from "@react-navigation/native";
 
 
 const MettingHistory = ({ route, navigation }) => {
   const [familyID, setFamilyID] = useState();
   const [meetingDayList, setMeetingDayList] = useState([]);
   const today = "2023-01-19";
-  console.log(typeof today === typeof "2023-01-19");
+  // console.log(typeof today === typeof "2023-01-19");
   useEffect(() => {
     try {
       UserClientCollection.doc(user.uid)
-        .get()
-        .then((doc) => {
-          setFamilyID(doc.data().familyID);
-        });
+        .onSnapshot((snapshot) => setFamilyID(snapshot.data().familyID))
+
+      console.log(familyID)
     } catch {
       (e) => {
         console.log(e);
@@ -25,7 +25,18 @@ const MettingHistory = ({ route, navigation }) => {
     }
   }, []);
   
-    // 캘린더에 표시 해야 하는데, 어떻게 하는게 좋을지
+
+  useEffect(() => {
+
+    MeetingCollection.where("familyID", "==", familyID).get().then(
+      (querysnap) => console.log(querysnap.docs)
+    )
+  , [familyID]})
+    
+  
+  
+  
+  // 캘린더에 표시 해야 하는데, 어떻게 하는게 좋을지
     // selectedDate list 해서 map으로 쭉 훑기
 {/* <Agenda
   // The list of items that have to be displayed in agenda. If you want to render item as empty date
