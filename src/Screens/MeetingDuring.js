@@ -3,26 +3,27 @@ import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
 import { COLOR_BG, COLOR_DEEPGREEN, COLOR_GREY } from "../Color";
 import { MeetingCollection } from "./firebase";
 import { mainStyle } from "./Home";
+import { dateFormat } from "./dateFormat";
 import { SafeArea } from "./StyleComponent";
 
 export const MettingDuring = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
   const [docID, setDocID] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const { familyID, startTime, selectedAgenda } = route.params;
+  const { familyID, meetingDate, startTime, selectedAgenda } = route.params;
   //5분이 경과되면 종료하기 버튼을 활성화
   setInterval(() => {
     setDisabled(false);
-  // }, 300000);
-}, 30);
-
+    // }, 300000);
+  }, 30);
 
   useEffect(() => {
     MeetingCollection.add({
       familyID: familyID,
+      meetingDate: meetingDate,
       startTime: startTime,
       endTime: startTime,
-      review: [],
+      review: null,
       selectedAgenda: selectedAgenda,
     })
       .then((docRef) => {
@@ -43,8 +44,9 @@ export const MettingDuring = ({ route, navigation }) => {
 
   const updateEndTime = async () => {
     try {
+      let endTime = new Date()
       await MeetingCollection.doc(docID).update({
-        endTime: Date(),
+        endTime: endTime
       });
     } catch {
       (e) => console.log(e);
@@ -68,7 +70,7 @@ export const MettingDuring = ({ route, navigation }) => {
               setVisible(false);
               //1초 기다린 후 home 화면으로 이동
               setTimeout(() => {
-                navigation.navigate("DrawerTabs",  { screen: '메인' });
+                navigation.navigate("DrawerTabs", { screen: "메인" });
               }, 1000);
             }}
           >

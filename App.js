@@ -29,6 +29,7 @@ import { MeetingFamilyConnect } from "./src/Screens/MeetingFamilyConnect";
 import { MettingDuring } from "./src/Screens/MeetingDuring";
 import MeetingHistory from "./src/Screens/MeetingHistory";
 import { MeetingAgendaSelect } from "./src/Screens/MeetingAgendaSelect";
+import { MeetingHistoryDetail } from "./src/Screens/MeetingHistoryDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,7 +51,7 @@ export default function App() {
   return (
     <NavigationContainer>
       {
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           {isLoggedIn === false ? (
             <Stack.Screen
               name="Login"
@@ -138,11 +139,17 @@ export default function App() {
             component={MeetingAgendaSelect}
             options={AppStyle.MeetingAgendaSelect}
           />
+          <Stack.Screen
+            name="MeetingHistoryDetail"
+            component={MeetingHistoryDetail}
+            // options={AppStyle.MeetingAgendaSelect}
+          />
           
           <Stack.Screen
             name="AccountWithdrawal"
             component={AccountWithdrawal}
           />
+
         </Stack.Navigator>
         
         

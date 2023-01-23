@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fv_321Project",
-    "slug": "fv_321Project",
+    "name": "오리함께",
+    "slug": "오리함께",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
@@ -14,5 +14,5 @@
     },
     "plugins": ["@react-native-google-signin/google-signin"]
   },
-  "name": "fv_321Project"
+  "name": "오리함께"
 }

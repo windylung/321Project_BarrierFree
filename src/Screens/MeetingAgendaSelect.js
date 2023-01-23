@@ -5,6 +5,8 @@ import { MettingAgendaCollection, RecommendAgendaCollection } from "./firebase";
 import { mainStyle } from "./Home";
 import { SafeArea } from "./StyleComponent";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { dateFormat } from "./dateFormat";
+
 
 export const MeetingAgendaSelect = ({ route, navigation }) => {
   const { familyID } = route.params;
@@ -74,10 +76,8 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
             id: doc.id,
             agenda: doc.data().agenda,
           }));
-          console.log(familyAgenda);
+         
           setFamilyAgenda(familyAgenda);
-        } else {
-          console.log("here", snapshot);
         }
       }
     );
@@ -109,22 +109,7 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
     );
   };
 
-  function dateFormat(date) {
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
 
-    month = month >= 10 ? month : '0' + month;
-    day = day >= 10 ? day : '0' + day;
-    hour = hour >= 10 ? hour : '0' + hour;
-    // minute = minute >= 10 ? minute : '0' + minute;
-    // second = second >= 10 ? second : '0' + second;
-
-    // return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-    return date.getFullYear() + '-' + month + '-' + day ;
-}
   const renderItemFamilyAgenda = ({ item }) => {
     // return <Text>{item.agenda}</Text>;
     return (
@@ -188,19 +173,17 @@ export const MeetingAgendaSelect = ({ route, navigation }) => {
         </View>
         <View style={{ flex: 0.1, justifyContent: "flex-end", padding: 30 }}>
           <TouchableOpacity
-            onPress={() =>{
 
-              const date = new Date()
+            onPress={() =>{
+              let startTime = new Date()
               navigation.reset({
                 routes: [
                   {
                     name: "MettingDuring",
                     params: {
                       familyID: familyID,
-                      startTime: dateFormat(new Date()),
-                      // startTime: {
-
-                      // },
+                      meetingDate: dateFormat(new Date()),
+                      startTime: startTime,
                       selectedAgenda: selectedAgenda,
                     },
                   },
