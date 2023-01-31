@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, LogBox, Modal, Text, TouchableOpacity, View } from "react-native";
 import { COLOR_BG, COLOR_DEEPGREEN, COLOR_GREY } from "../Color";
-import { MeetingCollection } from "./firebase";
+import { MeetingCollection, MettingAgendaCollection } from "./firebase";
 import { mainStyle } from "./Home";
 import { dateFormat } from "./dateFormat";
 import { SafeArea } from "./StyleComponent";
@@ -16,6 +16,11 @@ export const MettingDuring = ({ route, navigation }) => {
     setDisabled(false);
     // }, 300000);
   }, 30);
+  
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
 
   useEffect(() => {
     MeetingCollection.add({
@@ -32,7 +37,13 @@ export const MettingDuring = ({ route, navigation }) => {
       })
       .catch((e) => console.log(e));
   }, []);
-
+const deleteSelectedAgenda = () => {
+  selectedAgenda.forEach((doc) => {
+    console.log(doc)
+    MettingAgendaCollection.doc(doc.id).delete();
+    console.log("제거 되었습니다")
+  })
+}
   const renderItem = ({ item }) => {
     console.log(item);
     return (
@@ -111,6 +122,7 @@ export const MettingDuring = ({ route, navigation }) => {
             onPress={() => {
               // DB에 끝나는 시각(종료 버튼 누르는 시각) 업데이트
               updateEndTime();
+              deleteSelectedAgenda();
               setVisible(true);
             }}
             style={[

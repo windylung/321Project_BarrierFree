@@ -44,7 +44,7 @@ export const MeetingAgenda = () => {
         agenda: agenda,
         createTime: Date.now(),
       });
-      setAgenda("")
+      setAgenda("");
       console.log("Create Complete!!");
     } catch (error) {
       console.log(error.message);
